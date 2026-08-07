@@ -1,0 +1,114 @@
+# =============================================================================
+# SOURCE REGISTRY — Module 1
+# Centralized registry of every official government source the pipeline
+# is allowed to pull from. Nothing in ingestion/fetch_sources.py may fetch
+# a domain that isn't listed here (enforced in source_registry.py).
+# =============================================================================
+
+sources:
+
+  - id: india_gov
+    name: "National Portal of India"
+    url: "https://www.india.gov.in"
+    category: "central_umbrella"
+    jurisdiction: "central"
+    state: null
+    priority: 1                 # 1 = highest authority
+    refresh_frequency_days: 30
+    content_types: ["html"]
+    trust_tier: "primary"
+    notes: "Umbrella directory linking to ministry-level scheme pages."
+
+  - id: myscheme
+    name: "MyScheme — National Scheme Discovery Portal"
+    url: "https://www.myscheme.gov.in"
+    category: "central_umbrella"
+    jurisdiction: "central_and_state"
+    state: null
+    priority: 1
+    refresh_frequency_days: 7
+    content_types: ["html", "json_api"]
+    trust_tier: "primary"
+    notes: "Best structured source — has per-scheme eligibility/benefits/documents."
+
+  - id: pm_kisan
+    name: "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)"
+    url: "https://pmkisan.gov.in"
+    category: "farmer"
+    jurisdiction: "central"
+    state: null
+    priority: 1
+    refresh_frequency_days: 14
+    content_types: ["html", "pdf"]
+    trust_tier: "primary"
+
+  - id: ayushman_bharat
+    name: "Ayushman Bharat — PM-JAY"
+    url: "https://pmjay.gov.in"
+    category: "health"
+    jurisdiction: "central"
+    state: null
+    priority: 1
+    refresh_frequency_days: 14
+    content_types: ["html", "pdf"]
+    trust_tier: "primary"
+
+  - id: pmay
+    name: "Pradhan Mantri Awas Yojana"
+    url: "https://pmaymis.gov.in"
+    category: "housing"
+    jurisdiction: "central"
+    state: null
+    priority: 1
+    refresh_frequency_days: 14
+    content_types: ["html", "pdf"]
+    trust_tier: "primary"
+
+  - id: nsap
+    name: "National Social Assistance Programme"
+    url: "https://nsap.nic.in"
+    category: "social_welfare"
+    jurisdiction: "central"
+    state: null
+    priority: 1
+    refresh_frequency_days: 30
+    content_types: ["html", "pdf"]
+    trust_tier: "primary"
+
+  - id: maharashtra_schemes
+    name: "Maharashtra Government Schemes Portal (Aaple Sarkar)"
+    url: "https://aaplesarkar.mahaonline.gov.in"
+    category: "state_umbrella"
+    jurisdiction: "state"
+    state: "Maharashtra"
+    priority: 1
+    refresh_frequency_days: 14
+    content_types: ["html", "pdf"]
+    trust_tier: "primary"
+
+  - id: ogd_platform
+    name: "Open Government Data (OGD) Platform India"
+    url: "https://data.gov.in"
+    category: "open_data_api"
+    jurisdiction: "central_and_state"
+    state: null
+    priority: 2
+    refresh_frequency_days: 30
+    content_types: ["json_api", "csv"]
+    trust_tier: "primary"
+    notes: "Used for cross-verification and datasets, not primary scheme text."
+
+# ---------------------------------------------------------------------------
+# Refresh cadence by information type (mirrors freshness policy in Module 6)
+# ---------------------------------------------------------------------------
+freshness_policy:
+  eligibility_days: 14
+  benefits_days: 7
+  application_links_days: 7
+  department_info_days: 30
+
+# Priority tiers used by validate.py when two sources disagree
+priority_tiers:
+  1: "Authoritative — official ministry/department portal or MyScheme"
+  2: "Secondary — cross-verification / open data"
+  3: "Unverified — do not publish without manual review"

@@ -1,0 +1,36 @@
+# Dependency & build directories
+node_modules/
+backend/venv/
+backend/env/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Python cache & compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+backend/.pytest_cache/
+
+# Databases & Vector DBs
+*.sqlite3
+*.db
+backend/chroma_db/
+backend/vectorstore/
+chroma_db/
+
+# Environment files & credentials
+.env
+backend/.env
+frontend/.env
+frontend/.env.local
+
+# Logs
+*.log
+backend/logs/
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
