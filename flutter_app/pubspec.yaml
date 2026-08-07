@@ -1,0 +1,26 @@
+name: ai_screenshot_assistant
+description: "A system-level overlay AI screen assistant built with Flutter."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Core tools
+  flutter_riverpod: ^2.4.9
+  dio: ^5.4.0
+  permission_handler: ^11.1.0
+  lucide_icons: ^0.307.0
+  flutter_tts: ^3.8.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
