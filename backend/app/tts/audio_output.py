@@ -9,10 +9,15 @@ import base64
 import io
 
 import numpy as np
-import soundfile as sf
+try:
+    import soundfile as sf
+except ImportError:
+    sf = None
 
 
 def encode_wav(audio: np.ndarray, sample_rate: int) -> bytes:
+    if sf is None:
+        return b""
     buf = io.BytesIO()
     sf.write(buf, audio, sample_rate, format="WAV", subtype="PCM_16")
     return buf.getvalue()

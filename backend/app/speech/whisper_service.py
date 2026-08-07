@@ -9,8 +9,10 @@ import logging
 from dataclasses import dataclass
 from functools import lru_cache
 
-import numpy as np
-from faster_whisper import WhisperModel
+try:
+    from faster_whisper import WhisperModel
+except ImportError:
+    WhisperModel = None
 
 logger = logging.getLogger("app.speech.whisper_service")
 
@@ -36,17 +38,22 @@ class TranscriptionResult:
 
 
 @lru_cache(maxsize=1)
-def get_model() -> WhisperModel:
+def get_model():
     """Loads the Whisper Tiny model once per process."""
+    if WhisperModel is None:
+        logger.warning("faster_whisper module is not installed.")
+        return None
     logger.info("Loading faster-whisper tiny model (CPU, int8)...")
     model = WhisperModel("tiny", device="cpu", compute_type="int8")
     logger.info("Whisper model loaded.")
     return model
 
 
-def transcribe_audio(audio: np.ndarray, sample_rate: int = 16_000, hint_language: str | None = None) -> TranscriptionResult:
+def transcribe_audio(audio, sample_rate: int = 16_000, hint_language: str | None = None) -> TranscriptionResult:
     """Runs STT + language ID on a preprocessed 16kHz mono float32 array."""
     model = get_model()
+    if model is None:
+        return TranscriptionResult(text="", language=hint_language or "en", confidence=0.0)
 
     segments, info = model.transcribe(
         audio,

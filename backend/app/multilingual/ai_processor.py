@@ -10,8 +10,12 @@ import logging
 import os
 from typing import Callable, Optional
 
-from google import genai
-from google.genai import types as genai_types
+try:
+    from google import genai
+    from google.genai import types as genai_types
+except (ImportError, AttributeError):
+    import google.generativeai as genai
+    genai_types = None
 
 from app.multilingual.prompt_builder import build_messages
 from app.multilingual.response_formatter import format_for_display, format_for_speech

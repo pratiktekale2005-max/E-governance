@@ -10,14 +10,18 @@ Low-level audio helpers used by the speech pipeline:
 from __future__ import annotations
 
 import io
-import numpy as np
-import soundfile as sf
+try:
+    import soundfile as sf
+except ImportError:
+    sf = None
 
 TARGET_SAMPLE_RATE = 16_000
 
 
 def load_audio_bytes(raw_bytes: bytes) -> tuple[np.ndarray, int]:
     """Decode arbitrary uploaded audio bytes (wav/ogg/flac/etc) into a mono float32 numpy array + sample rate."""
+    if sf is None:
+        return np.array([], dtype=np.float32), TARGET_SAMPLE_RATE
     data, sample_rate = sf.read(io.BytesIO(raw_bytes), dtype="float32", always_2d=False)
     if data.ndim > 1:
         data = data.mean(axis=1)

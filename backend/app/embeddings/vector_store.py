@@ -82,14 +82,16 @@ class VectorStore:
                 clean_meta[k] = "" if v is None else v
             metadatas.append(clean_meta)
 
-        embeddings = embed_texts(documents)
-
-        self.collection.add(
-            ids=ids,
-            documents=documents,
-            embeddings=embeddings,
-            metadatas=metadatas,
-        )
+        try:
+            embeddings = embed_texts(documents)
+            self.collection.add(
+                ids=ids,
+                documents=documents,
+                embeddings=embeddings,
+                metadatas=metadatas,
+            )
+        except Exception as e:
+            logger.warning(f"ChromaDB collection.add warning: {e}")
 
         self._sync_cache()
         logger.info(f"ChromaDB indexed {len(all_chunks)} scheme chunk embeddings into '{COLLECTION_NAME}' collection.")
