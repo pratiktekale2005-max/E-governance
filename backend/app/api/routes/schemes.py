@@ -27,6 +27,38 @@ def list_schemes(
 
 
 @router.get(
+    "/recommended",
+    summary="Get Recommended Schemes for Citizen Profile",
+    description="Runs pre-screening matching and returns candidate schemes filtered by likelihood.",
+)
+def get_recommended_schemes(
+    state: Optional[str] = Query(None),
+    occupation: Optional[str] = Query(None),
+    age: Optional[int] = Query(None),
+    annual_income: Optional[float] = Query(None),
+    category: Optional[str] = Query(None),
+    gender: Optional[str] = Query(None),
+):
+    from app.models.citizen_profile import CitizenProfileInput
+    from app.pre_screening.service import pre_screening_service_instance
+
+    input_profile = CitizenProfileInput(
+        state=state,
+        occupation=occupation,
+        age=age,
+        annual_income=annual_income,
+        category=category,
+        gender=gender,
+    )
+    res = pre_screening_service_instance.run_pre_screening(input_profile, include_llm_explanation=False)
+    filtered = [s for s in res.matched_schemes if s.status.value in ["likely_match", "possible_match", "more_information_required"]]
+    return {
+        "recommended_count": len(filtered),
+        "schemes": filtered,
+    }
+
+
+@router.get(
     "/{scheme_id}",
     response_model=SchemeResponse,
     summary="Get Scheme Details",

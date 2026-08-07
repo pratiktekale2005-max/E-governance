@@ -10,6 +10,8 @@ from app.api.routes.pipeline import router as pipeline_router
 from app.api.routes.analyze import router as analyze_router
 from app.api.routes.speech import router as speech_router
 from app.api.routes.language import router as language_router
+from app.api.routes.profile import router as profile_router
+from app.api.routes.pre_screening import router as pre_screening_router
 
 api_router = APIRouter()
 
@@ -24,5 +26,5 @@ api_router.include_router(pipeline_router)
 api_router.include_router(analyze_router)
 api_router.include_router(speech_router)
 api_router.include_router(language_router)
-
-
+api_router.include_router(profile_router)
+api_router.include_router(pre_screening_router)
