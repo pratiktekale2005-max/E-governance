@@ -9,7 +9,7 @@ import {
   RotateCcw,
   Check
 } from 'lucide-react';
-import { SaarthiAvatar } from './SaarthiAvatar';
+import { SahayakAvatar } from './SaarthiAvatar';
 
 interface VoiceCallViewProps {
   onEndCall: () => void;
@@ -72,7 +72,7 @@ export const VoiceCallView: React.FC<VoiceCallViewProps> = ({ onEndCall, onSendV
             <div className="absolute w-36 h-36 rounded-full bg-indigo-400/30 animate-pulse pointer-events-none" />
           </>
         )}
-        <SaarthiAvatar size="xl" className="shadow-2xl ring-8 ring-purple-100" />
+        <SahayakAvatar size="xl" className="shadow-2xl ring-8 ring-purple-100" />
       </div>
 
       {/* Live Transcript Display */}

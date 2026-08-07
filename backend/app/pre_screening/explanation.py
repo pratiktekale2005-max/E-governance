@@ -29,7 +29,7 @@ def generate_llm_explanation(
     top_matches = [r for r in results if r.status in ["likely_match", "possible_match"]]
     more_info_matches = [r for r in results if r.status == "more_information_required"]
 
-    prompt = f"""You are Saarthi AI, a helpful citizen assistant for government scheme pre-screening.
+    prompt = f"""You are Sahayak AI, a helpful citizen assistant for government scheme pre-screening.
 Explain the following pre-screening results clearly, concisely, and empathetically to the citizen.
 
 RULES:
@@ -55,7 +55,7 @@ Respond in clean markdown using standard headings:
 
     try:
         chain = get_fallback_chain()
-        response_text = chain.generate(prompt=prompt, system_instruction="You are Saarthi AI.")
+        response_text = chain.generate(prompt=prompt, system_instruction="You are Sahayak AI.")
         if response_text and len(response_text.strip()) > 30:
             return response_text.strip()
     except Exception as e:

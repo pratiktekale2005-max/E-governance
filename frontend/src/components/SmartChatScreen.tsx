@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sparkles, Mic, X, Calendar, MapPin, Briefcase, GraduationCap, IndianRupee, ShieldCheck, Award, FileText, ChevronRight, Check, RotateCcw, Settings, Clock, Cpu, ExternalLink, Globe, ListOrdered, CheckCircle2, ArrowUpRight, LayoutDashboard, Search, Sliders, FolderLock, Bell, PhoneCall, Phone, UserCheck, FileCheck2 } from 'lucide-react';
-import { SaarthiAvatar, SahayakAvatar } from './SaarthiAvatar';
+import { SahayakAvatar } from './SaarthiAvatar';
 import { AppSettings, UserProfileData } from '../types';
 import { sendChatMessage, RAGResponseEnvelope } from '../services/api';
 
@@ -617,7 +617,7 @@ export const SmartChatScreen: React.FC<SmartChatScreenProps> = ({ settings, onSa
           {/* STATE: Processing (AI Understands) */}
           {appState === STATE_PROCESSING && (
             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-7 max-w-md mx-auto animate-fadeIn">
-              <SaarthiAvatar type="robot" size="xl" />
+              <SahayakAvatar type="robot" size="xl" />
 
               <div className="space-y-5 w-full">
                 {/* Speech Bubble */}
@@ -631,7 +631,7 @@ export const SmartChatScreen: React.FC<SmartChatScreenProps> = ({ settings, onSa
 
                 <div className="space-y-2.5">
                   <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100">Reasoning</span>
-                  <p className="text-xs font-bold text-slate-700">Saarthi AI is processing your request via RAG Pipeline...</p>
+                  <p className="text-xs font-bold text-slate-700">Sahayak AI is processing your request via RAG Pipeline...</p>
                   
                   {/* Typing Indicator Dots */}
                   <div className="flex justify-center items-center gap-1.5 pt-1">
@@ -647,12 +647,12 @@ export const SmartChatScreen: React.FC<SmartChatScreenProps> = ({ settings, onSa
           {/* STATE: AI Response + Transition */}
           {appState === STATE_TRANSITION && (
             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-7 max-w-md mx-auto animate-fadeIn">
-              <SaarthiAvatar type="robot" size="xl" />
+              <SahayakAvatar type="robot" size="xl" />
 
               <div className="space-y-5 w-full">
                 {/* AI response bubble */}
                 <div className="bg-purple-50/50 border border-purple-100 p-5 rounded-3xl text-left relative shadow-sm">
-                  <span className="text-[10px] text-purple-600 font-bold block mb-1 uppercase tracking-wider">Saarthi AI:</span>
+                  <span className="text-[10px] text-purple-600 font-bold block mb-1 uppercase tracking-wider">Sahayak AI:</span>
                   <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed">
                     Great! I can help you find suitable schemes. I'll ask you a few quick questions first.
                   </p>
@@ -1235,7 +1235,7 @@ export const SmartChatScreen: React.FC<SmartChatScreenProps> = ({ settings, onSa
               type="text"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
-              placeholder="Ask Saarthi about government schemes..."
+              placeholder="Ask Sahayak about government schemes..."
               className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200/70 rounded-2xl text-xs font-medium text-slate-800 outline-none focus:bg-white focus:border-purple-500 transition-all placeholder:text-slate-400"
             />
             
@@ -1314,7 +1314,7 @@ export const SmartChatScreen: React.FC<SmartChatScreenProps> = ({ settings, onSa
             </form>
 
             <div className="text-[10px] text-slate-400 font-semibold text-center border-t border-slate-100 pt-3">
-              Saarthi AI Citizen OS • Built with Google Gemini
+              Sahayak AI Citizen OS • Built with Google Gemini
             </div>
           </div>
         )}

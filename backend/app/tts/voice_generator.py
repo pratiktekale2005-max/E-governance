@@ -29,9 +29,28 @@ def get_voice_description(language: str, voice_style: str | None = None) -> str:
     return _DEFAULT_VOICE_DESCRIPTIONS.get(language, _DEFAULT_VOICE_DESCRIPTIONS["en"])
 
 
+import io
+import numpy as np
+
 def generate_voice_response(text: str, language: str, voice_style: str | None = None):
     """Returns (audio_array, sample_rate) for the given text/language."""
-    description = get_voice_description(language, voice_style)
-    logger.info("Synthesizing speech (%s, %d chars)", language, len(text))
-    audio, sample_rate = synthesize(text, description)
-    return audio, sample_rate
+    try:
+        description = get_voice_description(language, voice_style)
+        logger.info("Synthesizing speech (%s, %d chars)", language, len(text))
+        return synthesize(text, description)
+    except Exception as exc:
+        logger.info("Parler-TTS unavailable or failed (%s), using gTTS fallback...", exc)
+        try:
+            from gtts import gTTS
+            import soundfile as sf
+
+            lang_code = language if language in ["en", "hi", "mr", "ta", "te", "bn"] else "en"
+            tts = gTTS(text=text, lang=lang_code)
+            mp3_fp = io.BytesIO()
+            tts.write_to_fp(mp3_fp)
+            mp3_fp.seek(0)
+            data, sample_rate = sf.read(mp3_fp, dtype="float32")
+            return data, sample_rate
+        except Exception as fallback_exc:
+            logger.warning("gTTS fallback failed: %s", fallback_exc)
+            return np.zeros(16000, dtype=np.float32), 16000

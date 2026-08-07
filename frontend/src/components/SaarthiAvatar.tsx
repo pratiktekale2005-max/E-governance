@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles } from 'lucide-react';
 
-interface SaarthiAvatarProps {
+interface SahayakAvatarProps {
   type?: 'loader' | 'officer' | 'robot';
   className?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -9,7 +9,7 @@ interface SaarthiAvatarProps {
   onAvatarClick?: () => void;
 }
 
-export const SaarthiAvatar: React.FC<SaarthiAvatarProps> = ({ 
+export const SahayakAvatar: React.FC<SahayakAvatarProps> = ({ 
   className = '', 
   onAvatarClick
 }) => {
@@ -101,7 +101,7 @@ export const SaarthiAvatar: React.FC<SaarthiAvatarProps> = ({
   );
 };
 
-export const SahayakAvatar = SaarthiAvatar;
+export const SaarthiAvatar = SahayakAvatar;
 
 
 
