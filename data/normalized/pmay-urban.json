@@ -1,0 +1,36 @@
+{
+  "scheme_id": "pmay-urban",
+  "scheme_name": "Pradhan Mantri Awas Yojana — Urban (PMAY-U)",
+  "department": null,
+  "ministry": "Ministry of Housing and Urban Affairs",
+  "category": "housing",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Provides affordable pucca housing to eligible urban poor and middle-income households.",
+  "benefits": "Central assistance for house construction/enhancement, and interest subsidy on home loans under the credit-linked component (where applicable).",
+  "eligibility": [
+    "Household should not own a pucca house anywhere in India",
+    "Falls within the scheme's income-category slabs (EWS/LIG/MIG as applicable)"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Income certificate",
+    "Bank account details",
+    "Property/land documents (where applicable)"
+  ],
+  "application_steps": [
+    "Apply online via the PMAY-Urban portal or through the Urban Local Body"
+  ],
+  "application_mode": "online",
+  "official_urls": [
+    "https://pmaymis.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "pmay",
+  "content_hash": "66e3ef2f0bf1cac875b057de68c6604519e0f32139171e3e9e85fcaf6de1fc25",
+  "version": 1,
+  "related_scheme_ids": []
+}

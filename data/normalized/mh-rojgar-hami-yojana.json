@@ -1,0 +1,36 @@
+{
+  "scheme_id": "mh-rojgar-hami-yojana",
+  "scheme_name": "Maharashtra Employment Guarantee Scheme (Rojgar Hami Yojana)",
+  "department": "Employment Guarantee Scheme Department, Government of Maharashtra",
+  "ministry": null,
+  "category": "social_welfare",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "Guarantees unskilled manual employment on public works to rural households in Maharashtra, the state-level precursor/complement to MGNREGA.",
+  "benefits": "Guaranteed wage employment on public works for registered rural households, subject to the state's guarantee period.",
+  "eligibility": [
+    "Rural household in Maharashtra willing to do unskilled manual work",
+    "Registered job card holder"
+  ],
+  "required_documents": [
+    "Job card",
+    "Aadhaar card",
+    "Bank account details"
+  ],
+  "application_steps": [
+    "Register with the Gram Panchayat to obtain a job card",
+    "Apply for work when required"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "ae1df495e79f52b806a2340532ca37614abee76f469ab4a841f30d8522d89b71",
+  "version": 1,
+  "related_scheme_ids": []
+}

@@ -1,0 +1,33 @@
+{
+  "scheme_id": "soil-health-card",
+  "scheme_name": "Soil Health Card Scheme",
+  "department": null,
+  "ministry": "Ministry of Agriculture & Farmers Welfare",
+  "category": "farmer",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Provides farmers a soil health card every two years with nutrient status and fertilizer recommendations for their land.",
+  "benefits": "Free soil testing and a personalized report on nutrient status with crop-wise fertilizer recommendations.",
+  "eligibility": [
+    "All landholding farmers"
+  ],
+  "required_documents": [
+    "Land ownership proof"
+  ],
+  "application_steps": [
+    "Soil samples collected by state agriculture department teams",
+    "Card issued after lab analysis"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "f9585d1f11003ed02a0936af2918ed6ce8791cd8c9ef5b671c1ecbe2c237ced5",
+  "version": 1,
+  "related_scheme_ids": []
+}

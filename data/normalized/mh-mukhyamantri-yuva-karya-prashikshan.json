@@ -1,0 +1,38 @@
+{
+  "scheme_id": "mh-mukhyamantri-yuva-karya-prashikshan",
+  "scheme_name": "Mukhyamantri Yuva Karya Prashikshan Yojana (CM's Apprenticeship Scheme)",
+  "department": "Skill Development, Employment and Entrepreneurship Department, Government of Maharashtra",
+  "ministry": null,
+  "category": "student",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "On-the-job apprenticeship/internship scheme for Maharashtra youth with a monthly stipend, aimed at improving employability.",
+  "benefits": "Monthly stipend during a structured internship placement with a registered establishment, amount varying by qualification level.",
+  "eligibility": [
+    "Age 18-35",
+    "Domicile of Maharashtra",
+    "Registered on the state employment portal"
+  ],
+  "required_documents": [
+    "Educational certificates",
+    "Domicile certificate",
+    "Bank account details",
+    "Aadhaar card"
+  ],
+  "application_steps": [
+    "Register on the Maharashtra skill/employment portal",
+    "Get matched to a participating establishment"
+  ],
+  "application_mode": "online",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "04594c2b708cc27436823db6ad6d50ac07335cf08ebe2b73c1bdfa48a268c94c",
+  "version": 1,
+  "related_scheme_ids": []
+}

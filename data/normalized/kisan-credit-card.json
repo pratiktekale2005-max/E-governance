@@ -1,0 +1,35 @@
+{
+  "scheme_id": "kisan-credit-card",
+  "scheme_name": "Kisan Credit Card (KCC)",
+  "department": null,
+  "ministry": "Ministry of Agriculture & Farmers Welfare",
+  "category": "farmer",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Provides farmers with timely access to short-term credit for cultivation and allied needs at concessional interest rates.",
+  "benefits": "Short-term credit limit for crop production, post-harvest expenses, and allied activities with interest subvention.",
+  "eligibility": [
+    "Farmers, tenant farmers, oral lessees and sharecroppers",
+    "Members of SHGs/JLGs engaged in farming"
+  ],
+  "required_documents": [
+    "Identity proof",
+    "Address proof",
+    "Land documents"
+  ],
+  "application_steps": [
+    "Apply at any participating bank branch or via the PM-KISAN portal KCC link"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://pmkisan.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "pm_kisan",
+  "content_hash": "73f75e623c1bbe9ec2c20a053b0470b6d4e5acfc102e2f73cfab8be7bc1d36db",
+  "version": 1,
+  "related_scheme_ids": []
+}

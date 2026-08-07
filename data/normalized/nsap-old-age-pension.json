@@ -1,0 +1,36 @@
+{
+  "scheme_id": "nsap-old-age-pension",
+  "scheme_name": "Indira Gandhi National Old Age Pension Scheme (IGNOAPS)",
+  "department": null,
+  "ministry": "Ministry of Rural Development",
+  "category": "social_welfare",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Monthly pension for elderly persons from below-poverty-line households, under the National Social Assistance Programme.",
+  "benefits": "Monthly pension amount (central share, often supplemented by state top-up) paid directly to the beneficiary.",
+  "eligibility": [
+    "Age 60 years or above",
+    "Belongs to a below-poverty-line household"
+  ],
+  "required_documents": [
+    "Age proof",
+    "BPL certificate",
+    "Aadhaar card",
+    "Bank/post office account"
+  ],
+  "application_steps": [
+    "Apply through the Gram Panchayat/Urban Local Body or the NSAP portal"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://nsap.nic.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "nsap",
+  "content_hash": "10a2ef651cc37b8e08551810d902868b05fb804a6539e089600dea321b6cc3f9",
+  "version": 1,
+  "related_scheme_ids": []
+}

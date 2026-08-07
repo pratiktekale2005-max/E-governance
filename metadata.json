@@ -1,0 +1,6 @@
+{
+  "name": "Sahayak AI Citizen OS",
+  "description": "AI-powered Digital Government Officer for discovering welfare schemes and scholarship policies using Gemini and RAG.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,36 @@
+{
+  "scheme_id": "mh-mahatma-jyotirao-phule-jan-arogya",
+  "scheme_name": "Mahatma Jyotirao Phule Jan Arogya Yojana (MJPJAY)",
+  "department": "Public Health Department, Government of Maharashtra",
+  "ministry": null,
+  "category": "health",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "Maharashtra's cashless health insurance scheme for economically weaker families, now converged with Ayushman Bharat PM-JAY.",
+  "benefits": "Cashless treatment cover for a wide range of surgeries and therapies at network hospitals, up to the scheme's prescribed per-family limit.",
+  "eligibility": [
+    "Domicile of Maharashtra",
+    "Holder of a yellow/orange/Antyodaya/Annapurna ration card, or covered categories under the converged scheme"
+  ],
+  "required_documents": [
+    "Ration card",
+    "Aadhaar card",
+    "Photo ID"
+  ],
+  "application_steps": [
+    "Approach the Arogyamitra desk at a network hospital",
+    "Get the case approved before/at admission for cashless treatment"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "d34458d9df2b9e7838bdc6321b9ebf7ff21c1a157a39c61635035f4e16698476",
+  "version": 1,
+  "related_scheme_ids": []
+}

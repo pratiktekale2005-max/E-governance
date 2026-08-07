@@ -1,0 +1,39 @@
+{
+  "scheme_id": "post-matric-scholarship-sc",
+  "scheme_name": "Post-Matric Scholarship for SC Students",
+  "department": null,
+  "ministry": "Ministry of Social Justice and Empowerment",
+  "category": "student",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Financial assistance to Scheduled Caste students studying at the post-matriculation or post-secondary stage.",
+  "benefits": "Reimbursement of tuition/other fees plus a maintenance allowance, based on course and residence status.",
+  "eligibility": [
+    "Student belongs to a Scheduled Caste",
+    "Family income within the prescribed limit",
+    "Enrolled in a recognized post-matric institution"
+  ],
+  "required_documents": [
+    "Caste certificate",
+    "Income certificate",
+    "Previous marksheet",
+    "Bonafide certificate",
+    "Bank account details"
+  ],
+  "application_steps": [
+    "Register and apply on the National Scholarship Portal",
+    "Institution verifies and forwards the application"
+  ],
+  "application_mode": "online",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "e3cb76aba7b538f20ecaf092ab82b56542f386e2de160e70545f9c865e8eb2e0",
+  "version": 1,
+  "related_scheme_ids": []
+}

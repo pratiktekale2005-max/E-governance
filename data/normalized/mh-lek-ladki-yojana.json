@@ -1,0 +1,36 @@
+{
+  "scheme_id": "mh-lek-ladki-yojana",
+  "scheme_name": "Lek Ladki Yojana",
+  "department": "Women and Child Development Department, Government of Maharashtra",
+  "ministry": null,
+  "category": "women",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "Staged financial assistance scheme for girl children from economically weaker families in Maharashtra, paid at milestones through schooling.",
+  "benefits": "Cumulative staged cash benefit disbursed at birth, school milestones, and on turning 18 (subject to remaining unmarried till then).",
+  "eligibility": [
+    "Girl child born in a yellow/orange ration card (economically weaker) family in Maharashtra",
+    "Registered before the prescribed cut-off"
+  ],
+  "required_documents": [
+    "Birth certificate",
+    "Ration card",
+    "Aadhaar card",
+    "Bank account details"
+  ],
+  "application_steps": [
+    "Apply through the Anganwadi worker or Mahadbt portal"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "ecf172165956953ac0d816dfcc1af816cb434aab600cf3fa5e878eef22ef6d70",
+  "version": 1,
+  "related_scheme_ids": []
+}

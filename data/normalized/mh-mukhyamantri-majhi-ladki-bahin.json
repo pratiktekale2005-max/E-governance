@@ -1,0 +1,38 @@
+{
+  "scheme_id": "mh-mukhyamantri-majhi-ladki-bahin",
+  "scheme_name": "Mukhyamantri Majhi Ladki Bahin Yojana",
+  "department": "Women and Child Development Department, Government of Maharashtra",
+  "ministry": null,
+  "category": "women",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "Monthly financial assistance scheme for eligible women in Maharashtra to support economic independence.",
+  "benefits": "Monthly cash assistance credited directly to the beneficiary's bank account.",
+  "eligibility": [
+    "Domicile of Maharashtra",
+    "Age within the prescribed eligibility band",
+    "Family income below the prescribed limit",
+    "Aadhaar-linked bank account"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Domicile/residence proof",
+    "Income certificate",
+    "Bank passbook"
+  ],
+  "application_steps": [
+    "Apply online via the Mahadbt/Nari Shakti Doot portal or nearest Anganwadi/Setu centre"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "54d3117aed0b480bd0a966055de03a4c37fac3c63f7f52a88c66852842964302",
+  "version": 1,
+  "related_scheme_ids": []
+}

@@ -1,0 +1,35 @@
+{
+  "scheme_id": "mh-gopinath-munde-shetkari-apghat-vima",
+  "scheme_name": "Gopinath Munde Shetkari Apghat Suraksha Sanugrah Anudan Yojana",
+  "department": "Department of Agriculture, Government of Maharashtra",
+  "ministry": null,
+  "category": "farmer",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "Accident compensation scheme providing financial assistance to farmer families in Maharashtra in case of accidental death or disability of the farmer.",
+  "benefits": "Lump-sum ex-gratia compensation to the farmer's nominee/family in case of accidental death or permanent disability.",
+  "eligibility": [
+    "Farmers registered in Maharashtra land records (7/12 extract) aged 10-75 years"
+  ],
+  "required_documents": [
+    "7/12 land extract",
+    "Death/disability certificate",
+    "FIR/panchanama (for accidental death)",
+    "Aadhaar card"
+  ],
+  "application_steps": [
+    "Submit claim through Taluka Agriculture Officer within the prescribed period"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "e961f54238d0063c2592b36abfe9cd2e3ef897fb23be324ef6f679f7dcf4100e",
+  "version": 1,
+  "related_scheme_ids": []
+}

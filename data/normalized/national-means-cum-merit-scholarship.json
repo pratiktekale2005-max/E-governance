@@ -1,0 +1,38 @@
+{
+  "scheme_id": "national-means-cum-merit-scholarship",
+  "scheme_name": "National Means-cum-Merit Scholarship Scheme (NMMSS)",
+  "department": null,
+  "ministry": "Ministry of Education",
+  "category": "student",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Scholarship to economically weaker meritorious students to help them continue education at the secondary stage.",
+  "benefits": "Rs 12,000 per year (Rs 1,000/month) scholarship from class 9 to class 12.",
+  "eligibility": [
+    "Students who passed class 8 with prescribed marks",
+    "Family income below the prescribed threshold",
+    "Studying in government/government-aided/local body schools"
+  ],
+  "required_documents": [
+    "Income certificate",
+    "Previous mark sheet",
+    "Bank account details",
+    "Aadhaar card"
+  ],
+  "application_steps": [
+    "Qualify the state-level NMMS selection test",
+    "Apply/register on the National Scholarship Portal"
+  ],
+  "application_mode": "online",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "f25eac841e0b82cb602b2f82ddf203d51dfff7825b8b53ec20d4c3149792e352",
+  "version": 1,
+  "related_scheme_ids": []
+}

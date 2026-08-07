@@ -1,0 +1,37 @@
+{
+  "scheme_id": "ayushman-bharat-pmjay",
+  "scheme_name": "Ayushman Bharat — Pradhan Mantri Jan Arogya Yojana (PM-JAY)",
+  "department": null,
+  "ministry": "Ministry of Health and Family Welfare",
+  "category": "health",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "World's largest government-funded health assurance scheme, providing hospitalization cover to economically vulnerable families.",
+  "benefits": "Health cover of Rs 5 lakh per family per year for secondary and tertiary care hospitalization, cashless and paperless at empanelled hospitals.",
+  "eligibility": [
+    "Families identified per SECC deprivation/occupational criteria",
+    "Eligibility can be checked on the PM-JAY portal by ration/Aadhaar details"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Ration card (if applicable)",
+    "Ayushman Bharat card/PM-JAY ID"
+  ],
+  "application_steps": [
+    "Check eligibility on the PM-JAY portal or via CSC",
+    "Get an Ayushman card issued",
+    "Avail cashless treatment at empanelled hospitals"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://pmjay.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "ayushman_bharat",
+  "content_hash": "d512d8a18af978151fbeaa090485c91cb9d6cf2f9269fc5e7cb618acd451f259",
+  "version": 1,
+  "related_scheme_ids": []
+}
