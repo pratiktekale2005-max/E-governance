@@ -55,3 +55,12 @@ def generate_transparency_trace(
         ),
     ]
     return trace
+
+
+def build_trace(evidence_items: list = None, used_eligibility_engine: bool = True) -> List[TransparencyTraceStep]:
+    num_docs = len(evidence_items) if evidence_items else 2
+    return generate_transparency_trace(
+        num_documents_retrieved=num_docs,
+        num_rules_evaluated=num_docs * 2 if used_eligibility_engine else 0,
+        num_matches_found=1,
+    )

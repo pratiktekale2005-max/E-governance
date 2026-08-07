@@ -57,3 +57,27 @@ class EvidenceCollector:
 
 
 evidence_collector_instance = EvidenceCollector()
+
+
+def _mock_retriever(query: str, language: str) -> List[Dict[str, Any]]:
+    today = date.today().isoformat()
+    return [
+        {
+            "scheme_id": "pm-kisan",
+            "chunk_id": "eligibility-001",
+            "source_title": "PM-KISAN Portal",
+            "official_url": "https://pmkisan.gov.in",
+            "section": "Eligibility",
+            "page": 4,
+            "retrieved_at": today,
+            "last_verified_date": "2026-08-07",
+            "text": "Small and marginal farmer families with landholding are eligible.",
+            "status": "human_verified",
+        }
+    ]
+
+
+def collect_evidence(query: str, language: str = "en") -> List[EvidenceItem]:
+    chunks = _mock_retriever(query, language)
+    col = evidence_collector_instance.create_collection(query, chunks)
+    return col.items

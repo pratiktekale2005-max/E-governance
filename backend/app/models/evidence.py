@@ -24,3 +24,6 @@ class EvidenceItem(BaseModel):
 class EvidenceCollection(BaseModel):
     query: str
     items: List[EvidenceItem] = Field(default_factory=list)
+
+
+Evidence = EvidenceItem

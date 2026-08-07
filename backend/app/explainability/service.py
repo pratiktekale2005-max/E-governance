@@ -19,9 +19,15 @@ from app.explainability.official_links import extract_official_links
 from app.explainability.formatter import format_explainable_response
 
 
+import threading
+
+REQUIRED_PROFILE_FIELDS = ["occupation", "state", "income"]
+
+
 class ExplainabilityService:
     def __init__(self):
         self._response_cache: Dict[str, ExplainableResponsePayload] = {}
+        self._lock = threading.Lock()
 
     def build_explainable_response(
         self,
@@ -85,12 +91,54 @@ class ExplainabilityService:
             trace=trace,
         )
 
-        # Cache by response_id
-        self._response_cache[payload.response_id] = payload
+        # Cache with thread safety
+        with self._lock:
+            self._response_cache[payload.response_id] = payload
         return payload
 
     def get_cached_response(self, response_id: str) -> Optional[ExplainableResponsePayload]:
-        return self._response_cache.get(response_id)
+        with self._lock:
+            return self._response_cache.get(response_id)
+
+    def get_latest_for_scheme(self, scheme_id: str) -> Optional[ExplainableResponsePayload]:
+        with self._lock:
+            matches = [
+                r for r in self._response_cache.values()
+                if any(s.source_name and scheme_id.lower() in s.source_name.lower() for s in r.sources)
+            ]
+            return matches[-1] if matches else None
 
 
 explainability_service_instance = ExplainabilityService()
+ExplainabilityStore = ExplainabilityService
+store = explainability_service_instance
+
+
+def _missing_profile_fields(citizen_profile: dict | None) -> list[str]:
+    profile = citizen_profile or {}
+    return [f for f in REQUIRED_PROFILE_FIELDS if not profile.get(f)]
+
+
+def generate_explanation(
+    query: str,
+    language: str,
+    answer_text: str,
+    citizen_profile: dict | None = None,
+    scheme_id: str | None = None,
+) -> ExplainableResponsePayload:
+    mock_chunks = [
+        {
+            "scheme_id": scheme_id or "pm-kisan",
+            "scheme_name": "PM-KISAN Guidelines",
+            "official_url": "https://pmkisan.gov.in",
+            "section": "Eligibility",
+            "page": 4,
+            "text": "Direct income support of Rs 6,000 per year.",
+        }
+    ]
+    return explainability_service_instance.build_explainable_response(
+        query=query,
+        answer=answer_text,
+        retrieved_chunks=mock_chunks,
+        profile_dict=citizen_profile,
+    )

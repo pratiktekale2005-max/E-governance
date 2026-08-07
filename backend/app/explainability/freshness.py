@@ -9,6 +9,12 @@ from datetime import datetime, date
 from app.models.evidence import EvidenceItem
 
 
+STALE_WARNING = (
+    "This information has not been verified recently. "
+    "Please check the official portal before applying."
+)
+
+
 def validate_freshness(evidence_items: List[EvidenceItem], max_days_old: int = 180) -> tuple[bool, Optional[str], Optional[str]]:
     """
     Validates freshness of evidence items.
@@ -41,3 +47,27 @@ def validate_freshness(evidence_items: List[EvidenceItem], max_days_old: int = 1
         warning = f"This information was last verified on {latest_date_str} and may require re-verification on the official portal before applying."
 
     return not stale_found, latest_date_str, warning
+
+
+def is_stale(item: EvidenceItem, today: date | None = None) -> bool:
+    today_dt = today or date.today()
+    v_date_str = item.last_verified_date
+    if not v_date_str:
+        return True
+    try:
+        v_dt = datetime.strptime(v_date_str, "%Y-%m-%d").date()
+        return (today_dt - v_dt).days > 180
+    except ValueError:
+        return True
+
+
+def check_freshness(evidence_items: List[EvidenceItem], today: date | None = None) -> tuple[bool, Optional[str]]:
+    is_fresh, latest_date, warning = validate_freshness(evidence_items)
+    if not is_fresh:
+        return True, STALE_WARNING
+    return False, None
+
+
+def most_recent_verification(evidence_items: List[EvidenceItem]) -> Optional[str]:
+    _, latest_date, _ = validate_freshness(evidence_items)
+    return latest_date

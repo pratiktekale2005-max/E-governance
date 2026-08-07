@@ -35,3 +35,7 @@ class SourceConflict(BaseModel):
     sources_involved: List[str] = Field(default_factory=list)
     conflict_description: str
     action_recommendation: str = "Please verify using the latest official government notification."
+
+
+Confidence = ConfidenceEvaluation
+ConfidenceLevel = ConfidenceLevelEnum

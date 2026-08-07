@@ -42,3 +42,13 @@ def generate_reasons(
         reasons.append("✓ Profile attributes align with published government scheme criteria.")
 
     return list(dict.fromkeys(reasons))
+
+
+def _mock_eligibility(query: str, language: str, citizen_profile: Dict[str, Any] | None) -> List[Dict[str, Any]]:
+    prof = citizen_profile or {}
+    criteria = []
+    if str(prof.get("occupation", "")).lower() == "farmer":
+        criteria.append({"criterion": "Occupation", "matched": True, "detail": "You selected Farmer as your occupation."})
+    if prof.get("state"):
+        criteria.append({"criterion": "State", "matched": True, "detail": f"Your state ({prof['state']}) supports this scheme."})
+    return criteria

@@ -25,15 +25,17 @@ from app.models.pre_screening_result import (
     PreScreeningSchemeResult,
     PreScreeningCheckResponse,
 )
-from app.models.evidence import EvidenceItem, EvidenceCollection
-from app.models.citation import CitationItem
+from app.models.evidence import EvidenceItem, EvidenceCollection, Evidence
+from app.models.citation import CitationItem, Citation
 from app.models.confidence import (
     ConfidenceLevelEnum,
     ConfidenceFactor,
     ConfidenceEvaluation,
     SourceConflict,
+    Confidence,
+    ConfidenceLevel,
 )
-from app.models.explanation import TransparencyTraceStep, ExplainableResponsePayload
+from app.models.explanation import TransparencyTraceStep, ExplainableResponsePayload, ExplainableResponse
 
 __all__ = [
     "CitizenProfileInput",
@@ -59,11 +61,16 @@ __all__ = [
     "PreScreeningCheckResponse",
     "EvidenceItem",
     "EvidenceCollection",
+    "Evidence",
     "CitationItem",
+    "Citation",
     "ConfidenceLevelEnum",
     "ConfidenceFactor",
     "ConfidenceEvaluation",
+    "Confidence",
+    "ConfidenceLevel",
     "SourceConflict",
     "TransparencyTraceStep",
     "ExplainableResponsePayload",
+    "ExplainableResponse",
 ]

@@ -25,9 +25,6 @@ def generate_citations(evidence_items: List[EvidenceItem]) -> List[CitationItem]
             dept = "Ministry of Agriculture & Farmers Welfare" if "kisan" in item.scheme_id.lower() else "Department of Social Justice & Empowerment"
             if "health" in item.scheme_id.lower() or "arogya" in item.scheme_id.lower():
                 dept = "Ministry of Health and Family Welfare"
-            elif "education" in item.scheme_id.lower() or "scholarship" in item.scheme_id.lower():
-                dept = "Department of Higher Education"
-
             citations.append(
                 CitationItem(
                     source_name=item.source_title,
@@ -40,3 +37,8 @@ def generate_citations(evidence_items: List[EvidenceItem]) -> List[CitationItem]
             )
 
     return citations
+
+
+from app.explainability.official_links import extract_official_links
+
+generate_official_links = extract_official_links

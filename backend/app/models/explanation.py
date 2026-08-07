@@ -29,3 +29,6 @@ class ExplainableResponsePayload(BaseModel):
     conflicts: List[SourceConflict] = Field(default_factory=list, description="Detected source conflicts")
     freshness_warning: Optional[str] = Field(None, description="Stale data warning if applicable")
     transparency_trace: List[TransparencyTraceStep] = Field(default_factory=list, description="How answer was generated")
+
+
+ExplainableResponse = ExplainableResponsePayload

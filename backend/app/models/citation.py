@@ -14,3 +14,6 @@ class CitationItem(BaseModel):
     section: Optional[str] = Field(None, description="Specific section name")
     page_number: Optional[int] = Field(None, description="Page number reference")
     last_verified: str = Field("2026-08-07", description="Last human verification date (YYYY-MM-DD)")
+
+
+Citation = CitationItem
