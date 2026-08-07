@@ -8,6 +8,8 @@ from app.api.routes.chat import router as chat_router
 from app.api.routes.sources import router as sources_router
 from app.api.routes.pipeline import router as pipeline_router
 from app.api.routes.analyze import router as analyze_router
+from app.api.routes.speech import router as speech_router
+from app.api.routes.language import router as language_router
 
 api_router = APIRouter()
 
@@ -20,4 +22,7 @@ api_router.include_router(rag_router)
 api_router.include_router(sources_router)
 api_router.include_router(pipeline_router)
 api_router.include_router(analyze_router)
+api_router.include_router(speech_router)
+api_router.include_router(language_router)
+
 
