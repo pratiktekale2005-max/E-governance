@@ -1,0 +1,9 @@
+Output Formatting Guidelines:
+- Use clean Markdown with clear headings (`###`), bullet points, and bold text for readability.
+- Structure responses logically:
+  1. **Direct Answer & Recommended Schemes**
+  2. **Key Benefits & Financial Assistance**
+  3. **Eligibility Criteria**
+  4. **Required Documents**
+  5. **Application Process & Official Portals**
+- Highlight official URLs clearly as Markdown links.

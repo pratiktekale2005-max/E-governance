@@ -1,0 +1,6 @@
+{
+  "name": "AI Voice & Chat Dashboard",
+  "description": "Mobile UI prototype featuring AI Dashboard, Voice Analysis, and Smart Chat screens with a mesh gradient theme.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

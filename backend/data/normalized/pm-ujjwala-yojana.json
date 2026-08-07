@@ -1,0 +1,36 @@
+{
+  "scheme_id": "pm-ujjwala-yojana",
+  "scheme_name": "Pradhan Mantri Ujjwala Yojana (PMUY)",
+  "department": null,
+  "ministry": "Ministry of Petroleum and Natural Gas",
+  "category": "social_welfare",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Provides free LPG connections to women from below-poverty-line households to replace unclean cooking fuels.",
+  "benefits": "Free LPG gas connection with financial support for the deposit; first refill and stove often subsidized.",
+  "eligibility": [
+    "Adult woman from a BPL/eligible household",
+    "Household does not already have an LPG connection"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "BPL/ration card",
+    "Bank account details",
+    "Address proof"
+  ],
+  "application_steps": [
+    "Apply at the nearest LPG distributor or via the PMUY online portal"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "111eedc32ef5dbbb90c86afce483a13846ca16df6ade2b8523b4d03b53e3bfd3",
+  "version": 1,
+  "related_scheme_ids": []
+}

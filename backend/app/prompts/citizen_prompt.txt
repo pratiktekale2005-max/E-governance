@@ -1,0 +1,13 @@
+Citizen Demographic Profile & Query Details:
+- State of Residence: {state}
+- District: {district}
+- Preferred Language: {language}
+- Occupation: {occupation}
+- Annual Household Income: {income}
+- Age: {age}
+- Gender: {gender}
+- Socioeconomic Category: {category}
+
+Detected Intent: {intent}
+Original User Query: {query}
+Expanded Query: {rewritten_query}

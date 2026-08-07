@@ -1,0 +1,37 @@
+{
+  "scheme_id": "mh-rajarshi-shahu-maharaj-shikshan-shulkna",
+  "scheme_name": "Rajarshi Chhatrapati Shahu Maharaj Shikshan Shulk Shishyavrutti Yojana",
+  "department": "Department of Higher and Technical Education, Government of Maharashtra",
+  "ministry": null,
+  "category": "student",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "Fee waiver scheme for economically weaker and reserved-category students pursuing professional courses in Maharashtra.",
+  "benefits": "Full or partial waiver of tuition and examination fees for eligible professional-course students.",
+  "eligibility": [
+    "Domicile of Maharashtra",
+    "Family income below the prescribed limit",
+    "Admitted to a recognized professional degree/diploma course"
+  ],
+  "required_documents": [
+    "Income certificate",
+    "Domicile certificate",
+    "Caste certificate (if applicable)",
+    "Admission proof"
+  ],
+  "application_steps": [
+    "Apply through the Mahadbt portal at the time of admission each year"
+  ],
+  "application_mode": "online",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "fab6ca1f361d006eb441242880506f17fc17387255ff2dfcdcb967747bb8fffc",
+  "version": 1,
+  "related_scheme_ids": []
+}

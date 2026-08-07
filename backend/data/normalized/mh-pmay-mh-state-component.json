@@ -1,0 +1,36 @@
+{
+  "scheme_id": "mh-pmay-mh-state-component",
+  "scheme_name": "Pradhan Mantri Awas Yojana — Maharashtra State Implementation",
+  "department": "Housing Department, Government of Maharashtra",
+  "ministry": null,
+  "category": "housing",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "Maharashtra's state-level implementation and top-up support under PMAY for eligible urban and rural beneficiaries.",
+  "benefits": "State-level top-up assistance and coordination on top of central PMAY assistance for house construction.",
+  "eligibility": [
+    "Meets central PMAY eligibility criteria",
+    "Domicile of Maharashtra"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Income certificate",
+    "Domicile proof",
+    "Bank account details"
+  ],
+  "application_steps": [
+    "Apply through the Urban Local Body / Gram Panchayat, or the state housing portal"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "7d8254eb127018489d311afb60200f37faddf0efe66686a54dbbcd127c2c3f89",
+  "version": 1,
+  "related_scheme_ids": []
+}

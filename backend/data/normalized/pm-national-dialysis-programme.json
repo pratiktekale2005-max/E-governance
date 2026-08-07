@@ -1,0 +1,35 @@
+{
+  "scheme_id": "pm-national-dialysis-programme",
+  "scheme_name": "Pradhan Mantri National Dialysis Programme (PMNDP)",
+  "department": null,
+  "ministry": "Ministry of Health and Family Welfare",
+  "category": "health",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Provides free dialysis services to poor patients suffering from kidney failure at district hospitals.",
+  "benefits": "Free or subsidized hemodialysis sessions for below-poverty-line patients at designated government hospitals.",
+  "eligibility": [
+    "Patients requiring dialysis, priority given to BPL category",
+    "Availed at designated district hospital dialysis centres"
+  ],
+  "required_documents": [
+    "Referral/prescription from treating doctor",
+    "BPL/income proof (for free treatment)",
+    "Aadhaar card"
+  ],
+  "application_steps": [
+    "Get referred to the district hospital's dialysis unit by a treating physician"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "066099f3f7b45475da24cd44e485ec2b653f698495615265acd7b390c0ff10fe",
+  "version": 1,
+  "related_scheme_ids": []
+}

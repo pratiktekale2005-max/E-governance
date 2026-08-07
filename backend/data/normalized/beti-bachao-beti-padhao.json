@@ -1,0 +1,30 @@
+{
+  "scheme_id": "beti-bachao-beti-padhao",
+  "scheme_name": "Beti Bachao Beti Padhao",
+  "department": null,
+  "ministry": "Ministry of Women and Child Development",
+  "category": "women",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "National campaign to address the declining child sex ratio and promote education and welfare of the girl child.",
+  "benefits": "Community awareness, advocacy, and multi-sectoral action for girl-child survival, protection and education (not a direct cash-transfer scheme).",
+  "eligibility": [
+    "Nationwide campaign — no individual application required for the awareness component"
+  ],
+  "required_documents": [],
+  "application_steps": [
+    "Implemented through district-level task forces; individual welfare linkages via Anganwadi/health workers"
+  ],
+  "application_mode": "unknown",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "review_required",
+  "source_id": "myscheme",
+  "content_hash": "8993a0bde88862b2f74fa61ed37965259240c405bd390b2f12d7d199e8957763",
+  "version": 1,
+  "related_scheme_ids": []
+}

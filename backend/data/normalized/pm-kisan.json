@@ -1,0 +1,38 @@
+{
+  "scheme_id": "pm-kisan",
+  "scheme_name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+  "department": null,
+  "ministry": "Ministry of Agriculture & Farmers Welfare",
+  "category": "farmer",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Direct income support of Rs 6,000 per year to landholding farmer families, paid in three equal installments.",
+  "benefits": "Rs 6,000 per year transferred directly to bank accounts in three four-monthly installments of Rs 2,000 each.",
+  "eligibility": [
+    "Landholding farmer family (subject to exclusion criteria for high-income/institutional categories)",
+    "Valid land records in the farmer's name",
+    "Aadhaar-linked bank account"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Land ownership documents",
+    "Bank account passbook"
+  ],
+  "application_steps": [
+    "Register via Common Service Centre or the PM-KISAN portal",
+    "Complete eKYC",
+    "Submit land record and bank details for verification"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://pmkisan.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "pm_kisan",
+  "content_hash": "37c3f2837001b6c7b88d5af32242ea88ca03f8897c1fde865f4f1b092f974a08",
+  "version": 1,
+  "related_scheme_ids": []
+}

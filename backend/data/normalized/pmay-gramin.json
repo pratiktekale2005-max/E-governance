@@ -1,0 +1,36 @@
+{
+  "scheme_id": "pmay-gramin",
+  "scheme_name": "Pradhan Mantri Awas Yojana — Gramin (PMAY-G)",
+  "department": null,
+  "ministry": "Ministry of Rural Development",
+  "category": "housing",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Provides financial assistance to eligible rural households for construction of a pucca house.",
+  "benefits": "Central assistance for house construction, plus convergence support (toilet, electricity, LPG connection) with other government schemes.",
+  "eligibility": [
+    "Houseless or households living in kutcha/dilapidated houses in rural areas",
+    "Identified through the Socio-Economic Caste Census / Awaas+ survey"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Job card (MGNREGA, if applicable)",
+    "Bank account details"
+  ],
+  "application_steps": [
+    "Verify inclusion in the Awaas+ / PMAY-G beneficiary list",
+    "Construction tracked via the geo-tagged mobile app"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://pmaymis.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "pmay",
+  "content_hash": "80fa702baba1509b4d278c74ed12e34b349312e2e759ce76cc0787fc4350a73e",
+  "version": 1,
+  "related_scheme_ids": []
+}

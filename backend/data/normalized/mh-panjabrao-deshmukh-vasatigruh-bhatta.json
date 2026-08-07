@@ -1,0 +1,37 @@
+{
+  "scheme_id": "mh-panjabrao-deshmukh-vasatigruh-bhatta",
+  "scheme_name": "Dr. Panjabrao Deshmukh Vasatigruh Nirvah Bhatta Yojana",
+  "department": "Department of Higher and Technical Education, Government of Maharashtra",
+  "ministry": null,
+  "category": "student",
+  "jurisdiction": "state",
+  "state": "Maharashtra",
+  "summary": "Maintenance allowance for students from economically weaker sections who are not availing government hostel facilities.",
+  "benefits": "Monthly maintenance allowance to cover boarding/lodging for eligible students living outside government hostels.",
+  "eligibility": [
+    "Domicile of Maharashtra",
+    "Family income below the prescribed limit",
+    "Enrolled in a recognized professional course",
+    "Not residing in a government hostel"
+  ],
+  "required_documents": [
+    "Income certificate",
+    "Domicile certificate",
+    "Admission/bonafide certificate"
+  ],
+  "application_steps": [
+    "Apply through the Mahadbt portal along with admission documents"
+  ],
+  "application_mode": "online",
+  "official_urls": [
+    "https://aaplesarkar.mahaonline.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "maharashtra_schemes",
+  "content_hash": "7042d6de7019a341d67e261ab666d8fe06b6c5721962b63dcdbc70fa71b6fe6f",
+  "version": 1,
+  "related_scheme_ids": []
+}

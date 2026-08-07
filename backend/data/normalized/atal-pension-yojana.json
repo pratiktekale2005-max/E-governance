@@ -1,0 +1,35 @@
+{
+  "scheme_id": "atal-pension-yojana",
+  "scheme_name": "Atal Pension Yojana (APY)",
+  "department": null,
+  "ministry": "Ministry of Finance",
+  "category": "social_welfare",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Government-backed pension scheme mainly for workers in the unorganized sector, guaranteeing a fixed monthly pension after age 60.",
+  "benefits": "Guaranteed monthly pension (fixed slab chosen by subscriber) after age 60, based on contributions made.",
+  "eligibility": [
+    "Age 18-40 years",
+    "Holds a savings bank/post office account",
+    "Not an existing income-tax payee (per current eligibility rules)"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Bank account details"
+  ],
+  "application_steps": [
+    "Enroll through the bank or post office where the savings account is held"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "b56ef7a9a5efc7431be71b7f4a585bf210adcce9da00005a8f7d07c85701b5a4",
+  "version": 1,
+  "related_scheme_ids": []
+}

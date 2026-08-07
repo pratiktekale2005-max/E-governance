@@ -1,0 +1,36 @@
+{
+  "scheme_id": "pm-matru-vandana-yojana",
+  "scheme_name": "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
+  "department": null,
+  "ministry": "Ministry of Women and Child Development",
+  "category": "women",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Maternity benefit programme providing cash incentives to pregnant and lactating women for their first living child.",
+  "benefits": "Cash incentive paid in installments linked to health checkups and childbirth registration.",
+  "eligibility": [
+    "Pregnant and lactating women for first living child",
+    "Excludes women already receiving similar benefit under other schemes"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Bank/post office account",
+    "Mother and Child Protection card"
+  ],
+  "application_steps": [
+    "Register at the nearest Anganwadi Centre or health facility",
+    "Submit claim forms at each stage of eligibility"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "64c038e969ba83481441f93b60ce8b674eb9ef3a4e3e552e59ac337a6af5b7f2",
+  "version": 1,
+  "related_scheme_ids": []
+}

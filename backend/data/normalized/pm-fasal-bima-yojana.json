@@ -1,0 +1,36 @@
+{
+  "scheme_id": "pm-fasal-bima-yojana",
+  "scheme_name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+  "department": null,
+  "ministry": "Ministry of Agriculture & Farmers Welfare",
+  "category": "farmer",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Crop insurance scheme protecting farmers against yield loss from natural calamities, pests and disease.",
+  "benefits": "Insurance cover and claim payout for crop loss; low uniform premium share for farmers, balance subsidized by government.",
+  "eligibility": [
+    "Farmers growing notified crops in notified areas",
+    "Both loanee and non-loanee farmers eligible"
+  ],
+  "required_documents": [
+    "Aadhaar card",
+    "Land records",
+    "Bank account details",
+    "Sowing certificate"
+  ],
+  "application_steps": [
+    "Apply through bank (if loanee) or online/CSC (if non-loanee) before the cut-off date each season"
+  ],
+  "application_mode": "both",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "85b6280cc414d12b23ba71ab28d52db08d0be14f1c13896064802919727fcede",
+  "version": 1,
+  "related_scheme_ids": []
+}

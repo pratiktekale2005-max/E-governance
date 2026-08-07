@@ -1,0 +1,36 @@
+{
+  "scheme_id": "nsap-national-family-benefit",
+  "scheme_name": "National Family Benefit Scheme (NFBS)",
+  "department": null,
+  "ministry": "Ministry of Rural Development",
+  "category": "social_welfare",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "One-time financial assistance to a BPL household on the death of its primary breadwinner.",
+  "benefits": "Lump-sum one-time financial assistance to the bereaved household.",
+  "eligibility": [
+    "Household belongs to below-poverty-line category",
+    "Death of the primary breadwinner (aged 18-59)"
+  ],
+  "required_documents": [
+    "Death certificate",
+    "BPL certificate",
+    "Aadhaar card",
+    "Bank account details"
+  ],
+  "application_steps": [
+    "Apply through the Gram Panchayat/Urban Local Body within the prescribed period after death"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://nsap.nic.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "nsap",
+  "content_hash": "36829aeed1efd079602312d85bb571843576abadc7697ed24b6cf33cb6eb7753",
+  "version": 1,
+  "related_scheme_ids": []
+}

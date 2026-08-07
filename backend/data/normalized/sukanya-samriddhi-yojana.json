@@ -1,0 +1,34 @@
+{
+  "scheme_id": "sukanya-samriddhi-yojana",
+  "scheme_name": "Sukanya Samriddhi Yojana",
+  "department": null,
+  "ministry": "Ministry of Finance",
+  "category": "women",
+  "jurisdiction": "central",
+  "state": null,
+  "summary": "Small savings scheme for the financial security of the girl child, offering a fixed, government-backed interest rate.",
+  "benefits": "Tax-advantaged savings account with a government-set interest rate, maturing when the girl child reaches 21 years.",
+  "eligibility": [
+    "Girl child below 10 years of age",
+    "Account opened by parent/legal guardian"
+  ],
+  "required_documents": [
+    "Girl child's birth certificate",
+    "Guardian's identity and address proof"
+  ],
+  "application_steps": [
+    "Open an account at any post office or authorized bank branch"
+  ],
+  "application_mode": "offline",
+  "official_urls": [
+    "https://www.myscheme.gov.in"
+  ],
+  "language": "en",
+  "retrieved_date": "2026-08-07",
+  "last_verified_date": "2026-08-07",
+  "status": "validated",
+  "source_id": "myscheme",
+  "content_hash": "27b8cb720b4fec21e92c1eda552515d974423fee6a2dcb69bddaef9a299bd513",
+  "version": 1,
+  "related_scheme_ids": []
+}
