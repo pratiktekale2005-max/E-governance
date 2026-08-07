@@ -67,7 +67,7 @@ class CaptureHelper(private val context: Context) {
             e.printStackTrace()
         } finally {
             image?.close()
-            display.release()
+            display?.release()
             reader.close()
             mediaProjection.stop()
         }

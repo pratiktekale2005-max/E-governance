@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.ai_screenshot_assistant"
-    compileSdk = 34
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -16,7 +16,7 @@ android {
     defaultConfig {
         applicationId = "com.example.ai_screenshot_assistant"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
     }
