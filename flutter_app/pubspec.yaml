@@ -14,7 +14,6 @@ dependencies:
   flutter_riverpod: ^2.4.9
   dio: ^5.4.0
   permission_handler: ^11.1.0
-  lucide_icons: ^0.307.0
   flutter_tts: ^3.8.5
 
 dev_dependencies:

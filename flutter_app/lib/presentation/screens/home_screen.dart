@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import '../../core/platform_channel.dart';
 
 final serviceStateProvider = StateProvider<bool>((ref) => false);
@@ -24,7 +23,7 @@ class HomeScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                LucideIcons.cpu,
+                Icons.memory,
                 size: 72,
                 color: isRunning ? Colors.purple : Colors.grey,
               ),
@@ -58,7 +57,7 @@ class HomeScreen extends ConsumerWidget {
                     }
                   }
                 },
-                icon: Icon(isRunning ? LucideIcons.stopCircle : LucideIcons.play),
+                icon: Icon(isRunning ? Icons.stop_circle : Icons.play_arrow),
                 label: Text(isRunning ? 'Stop Assistant' : 'Launch Floating Assistant'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
