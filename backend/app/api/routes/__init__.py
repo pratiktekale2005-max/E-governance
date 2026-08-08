@@ -12,6 +12,10 @@ from app.api.routes.speech import router as speech_router
 from app.api.routes.language import router as language_router
 from app.api.routes.profile import router as profile_router
 from app.api.routes.pre_screening import router as pre_screening_router
+from app.api.routes.eligibility import router as eligibility_router
+from app.api.routes.documents import router as documents_router
+from app.api.routes.feedback import router as feedback_router
+from app.api.routes.history import router as history_router
 from app.api.routes.explainability import router as explainability_router
 
 api_router = APIRouter()
@@ -21,6 +25,10 @@ api_router.include_router(auth_router)
 api_router.include_router(users_router)
 api_router.include_router(schemes_router)
 api_router.include_router(chat_router)
+api_router.include_router(eligibility_router)
+api_router.include_router(documents_router)
+api_router.include_router(feedback_router)
+api_router.include_router(history_router)
 api_router.include_router(rag_router)
 api_router.include_router(sources_router)
 api_router.include_router(pipeline_router)

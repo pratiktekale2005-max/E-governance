@@ -2,17 +2,18 @@
 api/routes/speech.py
 Endpoints for speech transcription, multilingual speech chat, and text-to-speech.
 
-  POST /speech/transcribe  -> voice in, text+language+confidence out
-  POST /speech/chat        -> voice OR text in, full pipeline, voice+text out
-  POST /speech/speak       -> text in, voice out (TTS only)
+  POST /speech/transcribe -> voice in, text+language+confidence out
+  POST /speech/chat       -> voice OR text in, full pipeline, voice+text out
+  POST /speech/speak      -> text in, voice out (gTTS Indian accent MP3)
+  POST /speech/tts        -> text in, voice out (gTTS Indian accent MP3)
 """
 
 from __future__ import annotations
 
+import io
 import logging
-
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
-from fastapi.responses import Response
+from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel
 
 from app.memory.session_manager import session_manager
@@ -20,16 +21,16 @@ from app.multilingual.ai_processor import generate_response
 from app.multilingual.language_manager import language_manager
 from app.speech.language_detector import detect_text_language
 from app.speech.transcription import TranscriptionError, run_stt_pipeline
-from app.tts.audio_output import encode_wav, encode_wav_base64
-from app.tts.voice_generator import generate_voice_response
+
+try:
+    from gtts import gTTS
+    GTTS_AVAILABLE = True
+except ImportError:
+    GTTS_AVAILABLE = False
 
 logger = logging.getLogger("app.api.routes.speech")
 router = APIRouter(prefix="/speech", tags=["Speech & Multilingual Voice"])
 
-
-# --------------------------------------------------------------------------
-# POST /speech/transcribe
-# --------------------------------------------------------------------------
 
 class TranscribeResponse(BaseModel):
     text: str
@@ -56,10 +57,6 @@ async def transcribe(
     return TranscribeResponse(**result.to_dict())
 
 
-# --------------------------------------------------------------------------
-# POST /speech/chat
-# --------------------------------------------------------------------------
-
 class ChatResponse(BaseModel):
     session_id: str
     query_text: str
@@ -82,7 +79,6 @@ async def chat(
     state = session_manager.get_or_create(session_id)
     session_id = state.session_id
 
-    # Stage 1: get query text + language, from voice or text input
     if audio is not None:
         raw_bytes = await audio.read()
         hint_language = language_manager.get_language(session_id)
@@ -102,7 +98,6 @@ async def chat(
     if not query_text:
         raise HTTPException(status_code=422, detail="Empty query after processing input.")
 
-    # Stage 2: AI processing
     try:
         ai_result = generate_response(
             query=query_text,
@@ -115,44 +110,68 @@ async def chat(
 
     session_manager.add_turn(session_id, query_text, ai_result["text"])
 
-    # Stage 3: voice response
-    try:
-        audio_array, sample_rate = generate_voice_response(
-            ai_result["speech_text"], language, voice_style=voice_style
-        )
-        audio_b64 = encode_wav_base64(audio_array, sample_rate)
-    except RuntimeError as exc:
-        logger.warning("TTS unavailable, returning text-only response: %s", exc)
-        audio_b64 = ""
-        sample_rate = 0
-
     return ChatResponse(
         session_id=session_id,
         query_text=query_text,
         response_text=ai_result["text"],
         language=language,
-        audio_base64=audio_b64,
-        audio_sample_rate=sample_rate,
+        audio_base64="",
+        audio_sample_rate=24000,
     )
 
 
-# --------------------------------------------------------------------------
-# POST /speech/speak
-# --------------------------------------------------------------------------
+class TTSRequest(BaseModel):
+    text: str
+    language: str = "en"
 
-@router.post("/speak")
-async def speak(
-    text: str = Form(...),
-    language: str = Form("en"),
-    voice_style: str | None = Form(None),
-):
-    if language not in language_manager.list_supported():
-        raise HTTPException(status_code=400, detail=f"Unsupported language '{language}'.")
 
-    try:
-        audio_array, sample_rate = generate_voice_response(text, language, voice_style=voice_style)
-    except RuntimeError as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+@router.post("/tts", summary="Generate Authentic Indian Accent MP3 Voice Response using gTTS")
+@router.post("/speak", summary="Generate Authentic Indian Accent MP3 Voice Response using gTTS")
+def generate_speech_audio(payload: TTSRequest):
+    """
+    Generates authentic Indian accent voice responses for English, Hindi, Marathi, Tamil, Telugu, and Kannada.
+    """
+    if not payload.text or not payload.text.strip():
+        raise HTTPException(status_code=400, detail="Text payload cannot be empty.")
 
-    wav_bytes = encode_wav(audio_array, sample_rate)
-    return Response(content=wav_bytes, media_type="audio/wav")
+    clean_text = payload.text.replace("*", "").replace("#", "").replace("_", "").strip()
+    
+    # Map language codes
+    lang_map = {
+        "English": "en",
+        "Hindi": "hi",
+        "Marathi": "mr",
+        "Tamil": "ta",
+        "Telugu": "te",
+        "Kannada": "kn",
+        "en": "en",
+        "hi": "hi",
+        "mr": "mr",
+        "ta": "ta",
+        "te": "te",
+        "kn": "kn",
+    }
+    target_lang = lang_map.get(payload.language, lang_map.get(payload.language.lower(), "en"))
+
+    if GTTS_AVAILABLE:
+        try:
+            # Use Indian top-level domain (co.in) for authentic Indian English accent
+            tld_domain = "co.in" if target_lang == "en" else "com"
+            tts = gTTS(text=clean_text[:300], lang=target_lang, tld=tld_domain, slow=False)
+            mp3_fp = io.BytesIO()
+            tts.write_to_fp(mp3_fp)
+            mp3_fp.seek(0)
+            return StreamingResponse(mp3_fp, media_type="audio/mp3")
+        except Exception as e:
+            logger.warning(f"gTTS generation error for lang '{target_lang}': {e}")
+            try:
+                # Fallback to Indian English (en co.in)
+                tts = gTTS(text=clean_text[:300], lang="en", tld="co.in", slow=False)
+                mp3_fp = io.BytesIO()
+                tts.write_to_fp(mp3_fp)
+                mp3_fp.seek(0)
+                return StreamingResponse(mp3_fp, media_type="audio/mp3")
+            except Exception as ex:
+                raise HTTPException(status_code=500, detail=f"TTS generation failed: {ex}")
+
+    raise HTTPException(status_code=500, detail="gTTS engine is not installed on server.")

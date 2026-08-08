@@ -1168,6 +1168,7 @@ export const SmartChatScreen: React.FC<SmartChatScreenProps> = ({ settings, onSa
       {/* TAB 4: Scheme Directory View */}
       {activeTab === 'explorer' && (
         <SchemeExplorerView
+          onNavigate={(t) => setActiveTab(t as any)}
           onAskSahayakAboutScheme={(q) => {
             setInputVal(q);
             setActiveTab('chat');
@@ -1199,6 +1200,7 @@ export const SmartChatScreen: React.FC<SmartChatScreenProps> = ({ settings, onSa
         <SchemeDocumentChecklistScreen
           schemeName={selectedDocScheme}
           onBack={() => setActiveTab('chat')}
+          onNavigateVault={() => setActiveTab('vault')}
           onAskSahayakAboutDoc={(docName, schemeName) => {
             setInputVal(`How do I obtain ${docName} for ${schemeName}?`);
             setActiveTab('chat');
@@ -1213,7 +1215,9 @@ export const SmartChatScreen: React.FC<SmartChatScreenProps> = ({ settings, onSa
       {activeTab === 'applications' && <ApplicationsView />}
 
       {/* TAB 8: Notifications & Alerts View */}
-      {activeTab === 'notifications' && <NotificationsView />}
+      {activeTab === 'notifications' && (
+        <NotificationsView onNavigateTab={(t) => setActiveTab(t as any)} />
+      )}
 
       {/* TAB 9: Accessibility & Settings View */}
       {activeTab === 'accessibility' && (

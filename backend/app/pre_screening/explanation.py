@@ -55,9 +55,13 @@ Respond in clean markdown using standard headings:
 
     try:
         chain = get_fallback_chain()
-        response_text = chain.generate(prompt=prompt, system_instruction="You are Sahayak AI.")
-        if response_text and len(response_text.strip()) > 30:
-            return response_text.strip()
+        for provider in chain:
+            try:
+                response_text = provider.generate(prompt=prompt, system_instruction="You are Sahayak AI.")
+                if response_text and len(response_text.strip()) > 30:
+                    return response_text.strip()
+            except Exception:
+                continue
     except Exception as e:
         logger.warning(f"LLM explanation generation failed or fallback triggered: {e}")
 
@@ -82,7 +86,9 @@ Respond in clean markdown using standard headings:
     all_docs = []
     for res in results[:3]:
         for d in res.required_documents:
-            all_docs.append(f"- {d.document_name} (*{d.issuing_authority}*)")
+            doc_name = d.document_name if hasattr(d, "document_name") else str(d)
+            issuing = f" (*{d.issuing_authority}*)" if hasattr(d, "issuing_authority") else ""
+            all_docs.append(f"- {doc_name}{issuing}")
     for doc in list(dict.fromkeys(all_docs))[:5]:
         lines.append(doc)
 

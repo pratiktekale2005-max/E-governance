@@ -66,6 +66,22 @@ export interface RAGResponseEnvelope {
   disclaimer?: string;
 }
 
+export async function checkBackendHealth(): Promise<{ status: string; app?: string; timestamp?: string }> {
+  try {
+    const res = await fetch('/api/v1/health');
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    // try fallback route
+  }
+  try {
+    const res = await fetch('/health');
+    if (res.ok) return await res.json();
+  } catch (e) {}
+  return { status: 'offline' };
+}
+
 export async function sendChatMessage(payload: ChatMessagePayload): Promise<RAGResponseEnvelope> {
   try {
     const res = await fetch(`${API_BASE_URL}/chat`, {
@@ -118,6 +134,20 @@ export async function sendChatMessage(payload: ChatMessagePayload): Promise<RAGR
       disclaimer: 'Official verification source for government schemes.',
     };
   }
+}
+
+export async function evaluatePreScreening(profile: any): Promise<any> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/pre-screening/evaluate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ profile }),
+    });
+    if (res.ok) return await res.json();
+  } catch (error) {
+    console.warn('Pre-screening endpoint error, executing local evaluation fallback:', error);
+  }
+  return null;
 }
 
 export async function fetchSourcesList(): Promise<any> {

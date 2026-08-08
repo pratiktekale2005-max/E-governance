@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { 
   Globe, 
-  Volume2, 
   Eye, 
-  Sliders, 
   User, 
-  Save, 
-  Check, 
-  ShieldCheck, 
-  Moon, 
-  Sun,
-  Type
+  Save
 } from 'lucide-react';
 import { UserProfileData } from '../types';
+import { saveStoredProfile } from '../services/storage';
 
 interface AccessibilityViewProps {
   profile: UserProfileData;
@@ -40,9 +34,31 @@ export const AccessibilityView: React.FC<AccessibilityViewProps> = ({ profile, o
     { code: 'ml', name: 'മലയാളം (Malayalam)' }
   ];
 
+  const handleFontSizeChange = (size: 'normal' | 'large' | 'xlarge') => {
+    setFontSize(size);
+    if (size === 'large') {
+      document.documentElement.style.fontSize = '18px';
+    } else if (size === 'xlarge') {
+      document.documentElement.style.fontSize = '20px';
+    } else {
+      document.documentElement.style.fontSize = '16px';
+    }
+  };
+
+  const handleToggleContrast = () => {
+    const nextVal = !highContrast;
+    setHighContrast(nextVal);
+    if (nextVal) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     onUpdateProfile(editedProfile);
+    saveStoredProfile(editedProfile);
     setSavedSuccess(true);
     setTimeout(() => setSavedSuccess(false), 2000);
   };
@@ -98,7 +114,7 @@ export const AccessibilityView: React.FC<AccessibilityViewProps> = ({ profile, o
             </div>
             <select
               value={fontSize}
-              onChange={(e: any) => setFontSize(e.target.value)}
+              onChange={(e: any) => handleFontSizeChange(e.target.value)}
               className="px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold"
             >
               <option value="normal">Default (100%)</option>
@@ -114,7 +130,7 @@ export const AccessibilityView: React.FC<AccessibilityViewProps> = ({ profile, o
             </div>
             <button
               type="button"
-              onClick={() => setHighContrast(!highContrast)}
+              onClick={handleToggleContrast}
               className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${
                 highContrast ? 'bg-purple-600' : 'bg-slate-200'
               }`}

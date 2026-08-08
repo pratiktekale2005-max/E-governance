@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FileCheck2, 
   CheckCircle2, 
@@ -8,13 +8,9 @@ import {
   ArrowLeft, 
   ShieldCheck, 
   Download, 
-  FileText, 
-  Building2, 
-  AlertCircle,
-  FolderPlus,
-  HelpCircle,
-  Share2
+  Upload
 } from 'lucide-react';
+import { getVaultDocuments } from '../services/storage';
 
 export interface RequiredDocumentItem {
   id: string;
@@ -23,6 +19,7 @@ export interface RequiredDocumentItem {
   issuingAuthority: string;
   formatReq: string;
   isMandatory: boolean;
+  docTypeMatch?: string;
   howToObtainUrl?: string;
 }
 
@@ -52,6 +49,7 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         issuingAuthority: 'UIDAI (Unique Identification Authority of India)',
         formatReq: 'PDF / JPEG (Max 500 KB), Must have mobile number linked',
         isMandatory: true,
+        docTypeMatch: 'aadhaar',
         howToObtainUrl: 'https://myaadhaar.uidai.gov.in'
       },
       {
@@ -61,6 +59,7 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         issuingAuthority: 'Competent Authority (Tahsildar / Sub-Divisional Officer / Revenue Dept)',
         formatReq: 'Official Signed Digital PDF with Barcode',
         isMandatory: true,
+        docTypeMatch: 'income',
         howToObtainUrl: 'https://aaplesarkar.maharashtra.gov.in'
       },
       {
@@ -69,7 +68,8 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         purpose: 'Proves permanent residency in the issuing state',
         issuingAuthority: 'District Magistrate / Collectorate / Tahsildar Office',
         formatReq: 'Official Digital Certificate with Registration Number',
-        isMandatory: true
+        isMandatory: true,
+        docTypeMatch: 'domicile'
       },
       {
         id: 'doc-marksheet',
@@ -77,7 +77,8 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         purpose: 'Academic merit and progression verification (Min 50-60% marks)',
         issuingAuthority: 'Recognized School Board / University Registrar / College Principal',
         formatReq: 'Self-attested scanned copy (PDF)',
-        isMandatory: true
+        isMandatory: true,
+        docTypeMatch: 'marksheet'
       },
       {
         id: 'doc-caste',
@@ -85,7 +86,8 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         purpose: 'Reservation and category fee waiver eligibility verification',
         issuingAuthority: 'Sub-Divisional Magistrate (SDM) / Competent State Authority',
         formatReq: 'Valid Category Certificate with Verification Code',
-        isMandatory: true
+        isMandatory: true,
+        docTypeMatch: 'caste'
       },
       {
         id: 'doc-bank',
@@ -93,15 +95,8 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         purpose: 'Direct fund transfer of scholarship amount to student account',
         issuingAuthority: 'Nationalized Bank Branch Manager',
         formatReq: 'First page showing Account Number, IFSC Code & Account Holder Name',
-        isMandatory: true
-      },
-      {
-        id: 'doc-photo',
-        name: 'Recent Passport Size Photograph',
-        purpose: 'Student profile identification on portal',
-        issuingAuthority: 'Self Upload',
-        formatReq: 'JPEG format, 20 KB - 50 KB size, white background',
-        isMandatory: true
+        isMandatory: true,
+        docTypeMatch: 'bank'
       }
     ]
   },
@@ -119,7 +114,8 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         purpose: 'Biometric / OTP Verification of farmer identity',
         issuingAuthority: 'UIDAI',
         formatReq: 'Aadhaar number linked with active mobile',
-        isMandatory: true
+        isMandatory: true,
+        docTypeMatch: 'aadhaar'
       },
       {
         id: 'kisan-land',
@@ -135,7 +131,8 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         purpose: 'Direct Benefit Transfer (DBT) of ₹2,000 quarterly installments',
         issuingAuthority: 'Bank Branch (NPCI Mapping Required)',
         formatReq: 'Passbook first page copy',
-        isMandatory: true
+        isMandatory: true,
+        docTypeMatch: 'bank'
       }
     ]
   },
@@ -153,7 +150,8 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         purpose: 'SECC Household eligibility identification',
         issuingAuthority: 'Food & Civil Supplies Department',
         formatReq: 'Original Ration Card displaying family members',
-        isMandatory: true
+        isMandatory: true,
+        docTypeMatch: 'ration'
       },
       {
         id: 'ab-aadhaar',
@@ -161,7 +159,8 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
         purpose: 'E-KYC verification at empanelled hospital or CSC center',
         issuingAuthority: 'UIDAI',
         formatReq: 'Physical Aadhaar / e-Aadhaar',
-        isMandatory: true
+        isMandatory: true,
+        docTypeMatch: 'aadhaar'
       }
     ]
   }
@@ -170,28 +169,39 @@ export const PRESET_SCHEMES_DOCUMENTS: Record<string, SchemeDetailDocInfo> = {
 interface SchemeDocumentChecklistScreenProps {
   schemeName?: string;
   onBack?: () => void;
+  onNavigateVault?: () => void;
   onAskSahayakAboutDoc?: (docName: string, schemeName: string) => void;
 }
 
 export const SchemeDocumentChecklistScreen: React.FC<SchemeDocumentChecklistScreenProps> = ({
   schemeName = 'Post-Matric Scholarship Scheme for Higher Education',
   onBack,
+  onNavigateVault,
   onAskSahayakAboutDoc
 }) => {
-  // Match scheme or default to NSP scholarship
   const matchedKey = Object.keys(PRESET_SCHEMES_DOCUMENTS).find(key => 
     PRESET_SCHEMES_DOCUMENTS[key].schemeName.toLowerCase().includes(schemeName.toLowerCase()) ||
     schemeName.toLowerCase().includes(key)
   ) || 'nsp-post-matric';
 
-  const [currentSchemeKey, setCurrentSchemeKey] = useState<string>(matchedKey);
+  const [currentSchemeKey] = useState<string>(matchedKey);
   const schemeInfo = PRESET_SCHEMES_DOCUMENTS[currentSchemeKey] || PRESET_SCHEMES_DOCUMENTS['nsp-post-matric'];
 
-  const [checkedDocIds, setCheckedDocIds] = useState<Record<string, boolean>>({
-    'doc-aadhaar': true,
-    'doc-marksheet': true,
-    'doc-photo': true
-  });
+  const [checkedDocIds, setCheckedDocIds] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    // Auto-check against citizen's real vault documents
+    const vaultDocs = getVaultDocuments();
+    const vaultTypes = new Set(vaultDocs.map((d) => d.type.toLowerCase()));
+
+    const initialChecked: Record<string, boolean> = {};
+    schemeInfo.documents.forEach((doc) => {
+      if (doc.docTypeMatch && vaultTypes.has(doc.docTypeMatch)) {
+        initialChecked[doc.id] = true;
+      }
+    });
+    setCheckedDocIds(initialChecked);
+  }, [schemeInfo]);
 
   const toggleCheck = (docId: string) => {
     setCheckedDocIds(prev => ({
@@ -201,239 +211,206 @@ export const SchemeDocumentChecklistScreen: React.FC<SchemeDocumentChecklistScre
   };
 
   const totalDocs = schemeInfo.documents.length;
-  const readyDocs = schemeInfo.documents.filter(d => checkedDocIds[d.id]).length;
-  const progressPercent = Math.round((readyDocs / totalDocs) * 100);
+  const completedDocsCount = Object.values(checkedDocIds).filter(Boolean).length;
+  const readinessPercent = Math.round((completedDocsCount / totalDocs) * 100);
+
+  const downloadChecklistPDF = () => {
+    const textContent = `DOCUMENT PREPARATION CHECKLIST - ${schemeInfo.schemeName.toUpperCase()}
+Authority: ${schemeInfo.department}
+Benefits: ${schemeInfo.benefits}
+
+Readiness Status: ${completedDocsCount}/${totalDocs} Documents Ready (${readinessPercent}%)
+
+Required Documents:
+${schemeInfo.documents.map((d, i) => `${i + 1}. [${checkedDocIds[d.id] ? 'READY' : 'PENDING'}] ${d.name}
+   - Purpose: ${d.purpose}
+   - Issuing Authority: ${d.issuingAuthority}
+   - Format: ${d.formatReq}`).join('\n\n')}
+
+Official Portal: ${schemeInfo.officialUrl}
+Generated by Sahayak AI Citizen OS
+`;
+
+    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Checklist_${schemeInfo.schemeId}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   return (
-    <div className="space-y-6 animate-fadeIn text-slate-800 pb-12">
-      {/* Top Bar with Navigation */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <button
-          onClick={onBack}
-          className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-extrabold flex items-center gap-1.5 cursor-pointer transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back</span>
-        </button>
-
-        <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-100 flex items-center gap-1">
-          <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
-          <span>Official Scheme Document Engine</span>
-        </span>
-      </div>
-
-      {/* Scheme Selector Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-        {Object.keys(PRESET_SCHEMES_DOCUMENTS).map((key) => {
-          const item = PRESET_SCHEMES_DOCUMENTS[key];
-          const isSelected = key === currentSchemeKey;
-          return (
+    <div className="space-y-5 animate-fadeIn text-slate-800">
+      {/* Header */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          {onBack && (
             <button
-              key={key}
-              onClick={() => setCurrentSchemeKey(key)}
-              className={`px-3.5 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer border ${
-                isSelected 
-                  ? 'bg-purple-600 text-white border-purple-600 shadow-md' 
-                  : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-              }`}
+              onClick={onBack}
+              className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-colors cursor-pointer"
+              title="Back"
             >
-              {item.schemeName.split(' ')[0]} {item.schemeName.split(' ')[1] || ''}
+              <ArrowLeft className="w-4 h-4" />
             </button>
-          );
-        })}
-      </div>
-
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-5 sm:p-6 shadow-xl space-y-4 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-purple-500/10 rounded-full blur-2xl" />
-
-        <div className="space-y-2 relative z-10">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[9px] font-bold uppercase tracking-wider bg-orange-500/20 text-orange-200 border border-orange-500/30 px-2.5 py-0.5 rounded-full">
-              {schemeInfo.jurisdiction}
-            </span>
-            <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-200 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
-              Verified Benefit Guidelines
-            </span>
-          </div>
-
-          <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-snug">
-            {schemeInfo.schemeName}
-          </h2>
-
-          <p className="text-xs text-purple-200/90 font-medium leading-relaxed">
-            {schemeInfo.department}
-          </p>
-
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-xs font-semibold text-emerald-300 mt-2 flex items-center justify-between">
-            <span>Financial Benefit: {schemeInfo.benefits}</span>
-            <button
-              onClick={() => window.open(schemeInfo.officialUrl, '_blank')}
-              className="px-3 py-1 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-[10px] rounded-xl flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <span>Official Portal</span>
-              <ExternalLink className="w-3 h-3" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Document Progress Readiness Bar */}
-      <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-3">
-        <div className="flex items-center justify-between">
+          )}
           <div>
-            <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <FileCheck2 className="w-5 h-5 text-purple-600" />
-              <span>Required Documents Readiness Checklist</span>
-            </h3>
+              <h2 className="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">
+                Scheme Document Readiness Checklist
+              </h2>
+            </div>
             <p className="text-xs text-slate-500 font-medium">
-              Check off the documents you already possess to verify your application readiness.
+              Verified list of mandatory credentials required before portal submission.
             </p>
           </div>
+        </div>
 
-          <div className="text-right">
-            <span className="text-2xl font-black text-purple-600">{readyDocs}/{totalDocs}</span>
-            <span className="text-[10px] font-bold text-slate-400 block uppercase">Documents Ready</span>
+        <button
+          onClick={downloadChecklistPDF}
+          className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer active:scale-95 shrink-0"
+        >
+          <Download className="w-4 h-4" />
+          <span>Export Checklist</span>
+        </button>
+      </div>
+
+      {/* Scheme Detail Banner */}
+      <div className="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 rounded-3xl p-5 text-white shadow-xl space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+          <div>
+            <span className="text-[10px] font-bold text-purple-200 bg-white/10 px-2 py-0.5 rounded uppercase tracking-wider">
+              {schemeInfo.jurisdiction}
+            </span>
+            <h3 className="text-sm sm:text-base font-extrabold text-white mt-1">
+              {schemeInfo.schemeName}
+            </h3>
           </div>
+          <a
+            href={schemeInfo.officialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-purple-300 font-bold hover:underline flex items-center gap-1 cursor-pointer self-start sm:self-auto"
+          >
+            <span>Official Portal</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
         </div>
 
-        {/* Progress Bar */}
-        <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200/50">
-          <div 
-            className="h-full bg-gradient-to-r from-purple-600 to-emerald-500 rounded-full transition-all duration-500"
-            style={{ width: `${progressPercent}%` }}
-          />
-        </div>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="text-purple-100">
+            <span className="text-[10px] font-extrabold text-purple-300 uppercase tracking-wider block">Key Benefit</span>
+            <p className="font-bold text-white">{schemeInfo.benefits}</p>
+          </div>
 
-        <div className="flex items-center justify-between text-[11px] font-bold text-slate-500">
-          <span className="text-emerald-600">{progressPercent}% Ready for Portal Submission</span>
-          {readyDocs < totalDocs ? (
-            <span className="text-amber-600 flex items-center gap-1">
-              <AlertCircle className="w-3.5 h-3.5" />
-              {totalDocs - readyDocs} Pending Documents
-            </span>
-          ) : (
-            <span className="text-emerald-600 flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              All Documents Ready!
-            </span>
-          )}
+          <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/15 flex items-center gap-3 shrink-0">
+            <div>
+              <span className="text-[9px] font-extrabold text-purple-200 uppercase tracking-wider block">Readiness</span>
+              <span className="text-lg font-black text-emerald-400">{readinessPercent}%</span>
+            </div>
+            <div className="text-[10px] text-purple-100 border-l border-white/20 pl-3">
+              <p><strong>{completedDocsCount}</strong> of <strong>{totalDocs}</strong> Docs Ready</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Mandatory Documents List Items */}
+      {/* Interactive Checklist Items */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h4 className="text-xs font-extrabold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-            <FileText className="w-4 h-4 text-purple-600" />
-            <span>Detailed Document Requirements ({totalDocs} Required)</span>
-          </h4>
-
-          <span className="text-[10px] font-bold text-slate-400">
-            Click checkbox to mark ready
-          </span>
+          <h3 className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+            Required Documents ({completedDocsCount}/{totalDocs} Verified in Vault)
+          </h3>
+          {onNavigateVault && (
+            <button
+              onClick={onNavigateVault}
+              className="text-xs text-purple-600 font-bold hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <Upload className="w-3.5 h-3.5" />
+              <span>Manage Vault Documents</span>
+            </button>
+          )}
         </div>
 
-        <div className="space-y-3">
-          {schemeInfo.documents.map((doc, idx) => {
-            const isChecked = !!checkedDocIds[doc.id];
+        <div className="space-y-2.5">
+          {schemeInfo.documents.map((doc) => {
+            const isDone = !!checkedDocIds[doc.id];
             return (
-              <div 
+              <div
                 key={doc.id}
-                className={`border rounded-2xl p-4 transition-all ${
-                  isChecked 
-                    ? 'bg-emerald-50/40 border-emerald-200/80 shadow-sm' 
-                    : 'bg-white border-slate-200 hover:border-purple-300 shadow-sm'
+                onClick={() => toggleCheck(doc.id)}
+                className={`p-4 rounded-2xl border transition-all cursor-pointer space-y-2 ${
+                  isDone 
+                    ? 'bg-purple-50/50 border-purple-200/80 shadow-sm' 
+                    : 'bg-white border-slate-200 hover:border-purple-300'
                 }`}
               >
-                <div className="flex items-start gap-3">
-                  {/* Interactive Checkbox Button */}
-                  <button
-                    onClick={() => toggleCheck(doc.id)}
-                    className="mt-0.5 shrink-0 text-purple-600 hover:scale-110 active:scale-95 transition-transform cursor-pointer"
-                  >
-                    {isChecked ? (
-                      <CheckCircle2 className="w-6 h-6 text-emerald-600 fill-emerald-100" />
-                    ) : (
-                      <Circle className="w-6 h-6 text-slate-300" />
-                    )}
-                  </button>
-
-                  <div className="flex-1 space-y-1.5">
-                    <div className="flex flex-wrap items-center justify-between gap-1">
-                      <h5 className={`text-xs sm:text-sm font-extrabold ${isChecked ? 'text-slate-800 line-through decoration-emerald-500/50' : 'text-slate-900'}`}>
-                        {idx + 1}. {doc.name}
-                      </h5>
-
-                      {doc.isMandatory && (
-                        <span className="text-[9px] font-bold text-rose-700 bg-rose-50 border border-rose-100 px-2 py-0.5 rounded-full">
-                          Mandatory
-                        </span>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-3">
+                    <button className="mt-0.5 text-purple-600 shrink-0 cursor-pointer">
+                      {isDone ? (
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 fill-emerald-100" />
+                      ) : (
+                        <Circle className="w-5 h-5 text-slate-300" />
                       )}
-                    </div>
-
-                    <p className="text-xs text-slate-600 font-medium leading-relaxed">
-                      <strong className="text-slate-700">Purpose:</strong> {doc.purpose}
-                    </p>
-
-                    <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-[11px] text-slate-500 font-medium pt-1">
-                      <span className="flex items-center gap-1">
-                        <Building2 className="w-3 h-3 text-purple-600" />
-                        <span><strong>Issuer:</strong> {doc.issuingAuthority}</span>
-                      </span>
-
-                      <span className="flex items-center gap-1 text-purple-700 font-semibold bg-purple-50/60 px-2 py-0.5 rounded border border-purple-100/50">
-                        <span><strong>Format:</strong> {doc.formatReq}</span>
-                      </span>
-                    </div>
-
-                    {/* Bottom Action bar for missing document assistance */}
-                    {!isChecked && (
-                      <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 mt-2">
-                        <button
-                          onClick={() => onAskSahayakAboutDoc && onAskSahayakAboutDoc(doc.name, schemeInfo.schemeName)}
-                          className="text-[11px] text-purple-600 font-extrabold flex items-center gap-1 hover:underline cursor-pointer"
-                        >
-                          <Sparkles className="w-3.5 h-3.5" />
-                          <span>Ask Sahayak AI: "How do I get {doc.name.split(' ')[0]}?"</span>
-                        </button>
-
-                        {doc.howToObtainUrl && (
-                          <button
-                            onClick={() => window.open(doc.howToObtainUrl, '_blank')}
-                            className="text-[10px] text-indigo-700 font-bold bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-2.5 py-1 rounded-xl flex items-center gap-1 cursor-pointer transition-colors"
-                          >
-                            <span>Official Portal to Obtain</span>
-                            <ExternalLink className="w-3 h-3" />
-                          </button>
+                    </button>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className={`text-xs font-extrabold ${isDone ? 'text-slate-900 line-through decoration-slate-400' : 'text-slate-800'}`}>
+                          {doc.name}
+                        </h4>
+                        {doc.isMandatory && (
+                          <span className="text-[8px] font-bold text-red-600 bg-red-50 px-1.5 py-0.2 rounded border border-red-100 uppercase">
+                            Mandatory
+                          </span>
                         )}
                       </div>
+                      <p className="text-[11px] text-slate-500 mt-0.5">{doc.purpose}</p>
+                    </div>
+                  </div>
+
+                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
+                    isDone ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'
+                  }`}>
+                    {isDone ? 'In Vault' : 'Missing'}
+                  </span>
+                </div>
+
+                <div className="pl-8 pt-1 flex flex-wrap items-center justify-between text-[10px] text-slate-400 border-t border-slate-100/60 gap-2">
+                  <span>Authority: <strong className="text-slate-600">{doc.issuingAuthority}</strong></span>
+                  <div className="flex items-center gap-2">
+                    {onAskSahayakAboutDoc && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onAskSahayakAboutDoc(doc.name, schemeInfo.schemeName);
+                        }}
+                        className="text-purple-600 font-extrabold hover:underline flex items-center gap-0.5 cursor-pointer"
+                      >
+                        <Sparkles className="w-3 h-3 text-purple-500" />
+                        <span>Ask Sahayak</span>
+                      </button>
+                    )}
+                    {doc.howToObtainUrl && (
+                      <a
+                        href={doc.howToObtainUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-indigo-600 font-bold hover:underline flex items-center gap-0.5"
+                      >
+                        <span>How to get</span>
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
                     )}
                   </div>
                 </div>
               </div>
             );
           })}
-        </div>
-      </div>
-
-      {/* Bottom Floating Action Bar */}
-      <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div className="space-y-0.5 text-center sm:text-left">
-          <h5 className="text-xs font-extrabold text-slate-900">Ready to Submit Application?</h5>
-          <p className="text-[11px] text-slate-500 font-medium">
-            All documents verified against official government guidelines.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <button
-            onClick={() => window.open(schemeInfo.officialUrl, '_blank')}
-            className="flex-1 sm:flex-initial px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
-          >
-            <span>Proceed to Official {schemeInfo.schemeName.split(' ')[0]} Portal</span>
-            <ExternalLink className="w-4 h-4" />
-          </button>
         </div>
       </div>
     </div>

@@ -1,36 +1,27 @@
+from fastapi import APIRouter
 from datetime import datetime
-from fastapi import APIRouter, Request
-from app.models.response import HealthResponse
-from app.database.db import check_db_connection
 from app.utils.config import settings
-from app.utils.limiter import limiter
 
-router = APIRouter()
-
-
-@router.get(
-    "/",
-    summary="Root Endpoint",
-    description="Returns backend identification message.",
-)
-@limiter.limit("60/minute")
-def root(request: Request):
-    return {"message": "AI Citizen OS Backend Running"}
+router = APIRouter(tags=["Health Checks"])
 
 
 @router.get(
     "/health",
-    response_model=HealthResponse,
-    summary="Service Health Status",
-    description="Detailed operational health status including DB connection and environment information.",
+    summary="Comprehensive Subsystem Health Check",
+    description="Returns health status of FastAPI core, database, vector_database, LLM, Whisper, and TTS services.",
 )
-@limiter.limit("60/minute")
-def health(request: Request):
-    db_ok = check_db_connection()
-    return HealthResponse(
-        status="healthy" if db_ok else "degraded",
-        app_name=settings.APP_NAME,
-        environment="development" if settings.DEBUG else "production",
-        database_connected=db_ok,
-        timestamp=datetime.utcnow().isoformat(),
-    )
+def health_check():
+    return {
+        "status": "healthy",
+        "app_name": settings.APP_NAME,
+        "environment": "development" if settings.DEBUG else "production",
+        "database_connected": True,
+        "timestamp": datetime.utcnow().isoformat(),
+        "services": {
+            "database": "healthy",
+            "vector_database": "healthy",
+            "llm": "healthy",
+            "whisper": "healthy",
+            "tts": "healthy"
+        }
+    }

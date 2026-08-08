@@ -12,13 +12,18 @@ class SourceRequest(BaseModel):
     scheme_id: Optional[str] = Field(None, json_schema_extra={"example": "pm-kisan"})
 
 
+@router.get(
+    "",
+    summary="List Official Sources Metadata",
+    description="Retrieves official government source metadata, portal URLs, and trust tiers.",
+)
 @router.post(
     "",
     summary="Get Official Sources Metadata",
     description="Retrieves official government source metadata, portal URLs, and trust tiers.",
 )
-def get_sources_metadata(payload: SourceRequest):
-    if payload.source_id:
+def get_sources_metadata(payload: Optional[SourceRequest] = None):
+    if payload and payload.source_id:
         src = registry.get(payload.source_id)
         if not src:
             raise HTTPException(

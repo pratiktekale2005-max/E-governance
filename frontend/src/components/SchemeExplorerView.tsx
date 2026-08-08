@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Search, 
-  Filter, 
-  ExternalLink, 
   Bookmark, 
   CheckCircle2, 
-  FileText, 
-  Globe, 
   Sparkles, 
   X, 
-  GraduationCap, 
-  HeartHandshake, 
-  Building2, 
-  Sprout, 
-  Home, 
-  Check,
   ChevronRight,
   Database,
-  RefreshCw
+  RefreshCw,
+  ExternalLink,
+  Send
 } from 'lucide-react';
 import { fetchPublicSchemes } from '../services/api';
+import { addApplication } from '../services/storage';
 
 interface SchemeItem {
   id: string;
@@ -128,16 +121,19 @@ function mapBackendSchemeToUI(s: any): SchemeItem {
 interface SchemeExplorerViewProps {
   onAskSahayakAboutScheme: (schemeName: string) => void;
   onViewDocChecklist?: (schemeName: string) => void;
+  onNavigate?: (tab: string) => void;
 }
 
 export const SchemeExplorerView: React.FC<SchemeExplorerViewProps> = ({ 
   onAskSahayakAboutScheme,
-  onViewDocChecklist 
+  onViewDocChecklist,
+  onNavigate
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>(['nsp-post-matric']);
   const [activeModalScheme, setActiveModalScheme] = useState<SchemeItem | null>(null);
+  const [appliedSuccessMsg, setAppliedSuccessMsg] = useState<string | null>(null);
   
   const [apiSchemes, setApiSchemes] = useState<SchemeItem[]>([]);
   const [isLoadingApi, setIsLoadingApi] = useState(true);
@@ -177,6 +173,22 @@ export const SchemeExplorerView: React.FC<SchemeExplorerViewProps> = ({
     );
   };
 
+  const handleCreateApplication = (scheme: SchemeItem) => {
+    const newApp = addApplication({
+      schemeId: scheme.id,
+      schemeName: scheme.name,
+      category: scheme.category,
+      applicantName: 'Sahayak Citizen Profile',
+      documentsAttached: scheme.documents,
+      notes: `Applied directly via Sahayak AI for ${scheme.jurisdiction}`,
+    });
+
+    setAppliedSuccessMsg(`Application ${newApp.id} Created!`);
+    setTimeout(() => setAppliedSuccessMsg(null), 3000);
+    setActiveModalScheme(null);
+    if (onNavigate) onNavigate('applications');
+  };
+
   const filteredSchemes = schemesToDisplay.filter((scheme) => {
     const matchesSearch = 
       scheme.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -194,6 +206,15 @@ export const SchemeExplorerView: React.FC<SchemeExplorerViewProps> = ({
 
   return (
     <div className="space-y-5 animate-fadeIn text-slate-800">
+      {appliedSuccessMsg && (
+        <div className="p-3 bg-emerald-600 text-white text-xs font-bold rounded-2xl shadow-lg flex items-center justify-between animate-fadeIn">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>{appliedSuccessMsg}</span>
+          </div>
+        </div>
+      )}
+
       {/* Header & Search */}
       <div className="space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -369,18 +390,13 @@ export const SchemeExplorerView: React.FC<SchemeExplorerViewProps> = ({
             </div>
 
             <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
-              {onViewDocChecklist && (
-                <button
-                  onClick={() => {
-                    const sName = activeModalScheme.name;
-                    setActiveModalScheme(null);
-                    onViewDocChecklist(sName);
-                  }}
-                  className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
-                >
-                  <span>📋 View Required Documents List Screen</span>
-                </button>
-              )}
+              <button
+                onClick={() => handleCreateApplication(activeModalScheme)}
+                className="w-full py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+              >
+                <Send className="w-4 h-4" />
+                <span>Submit Application via Sahayak AI</span>
+              </button>
 
               <div className="flex flex-col sm:flex-row gap-2">
                 <button
@@ -396,7 +412,7 @@ export const SchemeExplorerView: React.FC<SchemeExplorerViewProps> = ({
 
                 <button
                   onClick={() => window.open(activeModalScheme.officialUrl, '_blank')}
-                  className="flex-1 py-2.5 bg-purple-600 text-white hover:bg-purple-700 rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
+                  className="flex-1 py-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
                 >
                   <span>Apply on Official Portal</span>
                   <ExternalLink className="w-3.5 h-3.5" />

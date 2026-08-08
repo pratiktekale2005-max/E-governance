@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Mic, 
   MicOff, 
   PhoneOff, 
   Volume2, 
   Globe, 
-  Sparkles, 
-  RotateCcw,
-  Check
+  Sparkles
 } from 'lucide-react';
 import { SahayakAvatar } from './SaarthiAvatar';
 
@@ -22,36 +20,68 @@ export const VoiceCallView: React.FC<VoiceCallViewProps> = ({ onEndCall, onSendV
   const [language, setLanguage] = useState<'en' | 'hi' | 'mr'>('en');
   const [transcript, setTranscript] = useState('Namaste! I am Sahayak AI Officer. How can I assist you with government scholarships today?');
 
-  const sampleTranscripts = {
-    en: [
-      "Namaste! I am Sahayak AI Officer. How can I assist you with government scholarships today?",
-      "Checking National Scholarship Portal eligibility for Maharashtra students...",
-      "You qualify for 50% tuition waiver under the Rajarshi Shahu Maharaj Scheme!"
-    ],
-    hi: [
-      "नमस्ते! मैं सहायक AI अधिकारी हूँ। आज मैं आपकी सरकारी योजनाओं में कैसे सहायता कर सकता हूँ?",
-      "महाराष्ट्र के छात्रों के लिए राष्ट्रीय छात्रवृत्ति पोर्टल पात्रता की जाँच की जा रही है...",
-      "आप राजर्षि शाहू महाराज योजना के तहत 50% शिक्षण शुल्क छूट के लिए पात्र हैं!"
-    ],
-    mr: [
-      "नमस्कार! मी सहाय्यक AI अधिकारी आहे. आज मी तुम्हाला शासकीय शिष्यवृत्ती योजनांमध्ये कशी मदत करू शकतो?",
-      "महाराष्ट्र विद्यार्थ्यांसाठी राष्ट्रीय शिष्यवृत्ती पोर्टल पात्रतेची तपासणी करत आहे...",
-      "तुम्ही राजर्षी शाहू महाराज योजनेअंतर्गत ५०% शिक्षण शुल्क माफीसाठी पात्र आहात!"
-    ]
+  const recognitionRef = useRef<any>(null);
+
+  const speakText = (text: string, langCode: string) => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = langCode === 'hi' ? 'hi-IN' : langCode === 'mr' ? 'mr-IN' : 'en-IN';
+      utterance.rate = 1.0;
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   useEffect(() => {
-    let timer: any;
-    let idx = 0;
-    timer = setInterval(() => {
-      idx = (idx + 1) % sampleTranscripts[language].length;
-      setTranscript(sampleTranscripts[language][idx]);
-      setIsSpeaking(true);
-      setTimeout(() => setIsSpeaking(false), 2500);
-    }, 5000);
+    // Initial greeting TTS
+    const langCode = language === 'hi' ? 'hi-IN' : language === 'mr' ? 'mr-IN' : 'en-IN';
+    speakText(transcript, langCode);
 
-    return () => clearInterval(timer);
+    // Initialize Web Speech Recognition
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const rec = new SpeechRecognition();
+      rec.continuous = true;
+      rec.interimResults = true;
+      rec.lang = langCode;
+
+      rec.onresult = (event: any) => {
+        const text = event.results[event.results.length - 1][0].transcript;
+        if (text && !isMuted) {
+          setTranscript(`You said: "${text}"`);
+          onSendVoiceQuery(text);
+        }
+      };
+
+      try {
+        rec.start();
+        recognitionRef.current = rec;
+      } catch (e) {}
+    }
+
+    return () => {
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch (e) {}
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
   }, [language]);
+
+  const toggleMute = () => {
+    if (recognitionRef.current) {
+      if (!isMuted) {
+        try { recognitionRef.current.stop(); } catch (e) {}
+      } else {
+        try { recognitionRef.current.start(); } catch (e) {}
+      }
+    }
+    setIsMuted(!isMuted);
+  };
 
   return (
     <div className="flex-1 flex flex-col items-center justify-between py-6 px-4 space-y-6 text-center animate-fadeIn text-slate-800">
@@ -79,7 +109,7 @@ export const VoiceCallView: React.FC<VoiceCallViewProps> = ({ onEndCall, onSendV
       <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 max-w-md w-full shadow-sm space-y-1">
         <div className="flex items-center justify-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
           <Volume2 className={`w-3.5 h-3.5 ${isSpeaking ? 'text-purple-600 animate-bounce' : ''}`} />
-          <span>Officer Speech Transcript</span>
+          <span>Live Consultation Transcript</span>
         </div>
         <p className="text-xs sm:text-sm font-extrabold text-slate-800 leading-relaxed min-h-[48px] flex items-center justify-center">
           "{transcript}"
@@ -120,7 +150,7 @@ export const VoiceCallView: React.FC<VoiceCallViewProps> = ({ onEndCall, onSendV
       {/* Call Action Controls */}
       <div className="flex items-center justify-center gap-4 pt-2">
         <button
-          onClick={() => setIsMuted(!isMuted)}
+          onClick={toggleMute}
           className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
             isMuted ? 'bg-red-50 text-red-600 border-red-200' : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
           }`}
